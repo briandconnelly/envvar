@@ -5,3 +5,4 @@
 ^cran-comments\.md$
 ^NOTES.md$
 ^testing.R$
+^\.github$
