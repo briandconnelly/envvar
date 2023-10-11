@@ -17,5 +17,5 @@ A logical value
 set.
 }
 \examples{
-envvar_isset("HOME")
+envvar_is_set("HOME")
 }

@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' envvar_isset("HOME")
+#' envvar_is_set("HOME")
 envvar_is_set <- function(x) {
   assert_scalar_string(x)
   !is.na(Sys.getenv(x, unset = NA_character_))
