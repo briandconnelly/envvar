@@ -11,7 +11,7 @@ envvar_get_file(
   check_writable = FALSE,
   transform = NULL,
   create = TRUE,
-  error_if_unset = FALSE
+  use_default = TRUE
 )
 
 envvar_get_dir(
@@ -20,7 +20,7 @@ envvar_get_dir(
   create = TRUE,
   check_readable = FALSE,
   check_writable = FALSE,
-  error_if_unset = FALSE
+  use_default = TRUE
 )
 }
 \arguments{
@@ -36,8 +36,9 @@ variable's value}
 \item{create}{Create the file or directory if it does not exist (default:
 \code{TRUE})}
 
-\item{error_if_unset}{Logical value indicating whether or not to raise an
-error if the given environment variable is not set (default: \code{FALSE}).}
+\item{use_default}{Logical value indicating whether the value specified by
+\code{default} should be used (\code{TRUE}, the default) or an error should be raised
+(\code{FALSE})}
 }
 \description{
 \code{envvar_get_file} gets a file name from an environment variable
@@ -50,10 +51,12 @@ variable
 # Get a file path and make sure it exists
 \dontrun{
 envvar_set("MYDATA" = "/tmp/data.parquet")
-envvar_get_file("MYDATA")}
+envvar_get_file("MYDATA")
+}
 
 # Get a file path and make sure it exists
 \dontrun{
 envvar_set("MYDATADIR" = "/tmp/data/")
-envvar_get_dir("MYDATADIR")}
+envvar_get_dir("MYDATADIR")
+}
 }

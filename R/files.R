@@ -13,13 +13,14 @@
 #' # Get a file path and make sure it exists
 #' \dontrun{
 #' envvar_set("MYDATA" = "/tmp/data.parquet")
-#' envvar_get_file("MYDATA")}
+#' envvar_get_file("MYDATA")
+#' }
 envvar_get_file <- function(x,
                             check_readable = FALSE,
                             check_writable = FALSE,
                             transform = NULL,
                             create = TRUE,
-                            error_if_unset = FALSE) {
+                            use_default = TRUE) {
   envvar_get(
     x,
     default = NA_character_,
@@ -32,7 +33,7 @@ envvar_get_file <- function(x,
         is_writable = check_writable
       )
     },
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }
 
@@ -46,13 +47,14 @@ envvar_get_file <- function(x,
 #' # Get a file path and make sure it exists
 #' \dontrun{
 #' envvar_set("MYDATADIR" = "/tmp/data/")
-#' envvar_get_dir("MYDATADIR")}
+#' envvar_get_dir("MYDATADIR")
+#' }
 envvar_get_dir <- function(x,
                            transform = NULL,
                            create = TRUE,
                            check_readable = FALSE,
                            check_writable = FALSE,
-                           error_if_unset = FALSE) {
+                           use_default = TRUE) {
   envvar_get(
     x,
     default = NA_character_,
@@ -65,6 +67,6 @@ envvar_get_dir <- function(x,
         is_writable = check_writable
       )
     },
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }

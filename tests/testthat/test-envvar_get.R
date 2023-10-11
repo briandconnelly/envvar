@@ -37,29 +37,29 @@ test_that("envvar_get() validates `validate` argument correctly", {
   )
 })
 
-test_that("envvar_get() validates `error_if_unset` argument correctly", {
-  # error_if_unset should be a scalar logical
-  expect_error(envvar_get("HOME", error_if_unset = NULL))
-  expect_error(envvar_get("HOME", error_if_unset = NA))
-  expect_error(envvar_get("HOME", error_if_unset = 1))
-  expect_error(envvar_get("HOME", error_if_unset = "Yes"))
-  expect_error(envvar_get("HOME", error_if_unset = "TRUE"))
-  expect_error(envvar_get("HOME", error_if_unset = c(TRUE, FALSE)))
+test_that("envvar_get() validates `use_default` argument correctly", {
+  # use_default should be a scalar logical
+  expect_error(envvar_get("HOME", use_default = NULL))
+  expect_error(envvar_get("HOME", use_default = NA))
+  expect_error(envvar_get("HOME", use_default = 1))
+  expect_error(envvar_get("HOME", use_default = "Yes"))
+  expect_error(envvar_get("HOME", use_default = "TRUE"))
+  expect_error(envvar_get("HOME", use_default = c(TRUE, FALSE)))
 })
 
-test_that("envvar_get() errors if variable unset (and error_if_unset = TRUE)", {
+test_that("envvar_get() errors if variable unset (and use_default = FALSE)", {
   withr::local_envvar(c("TESTENV_ENVVAR" = NA))
-  expect_error(envvar_get("TESTENV_ENVVAR", error_if_unset = TRUE))
+  expect_error(envvar_get("TESTENV_ENVVAR", use_default = FALSE))
   expect_snapshot(
-    envvar_get("TESTENV_ENVVAR", error_if_unset = TRUE),
+    envvar_get("TESTENV_ENVVAR", use_default = FALSE),
     error = TRUE
   )
 })
 
-test_that("envvar_get() shows message if variable unset (and error_if_unset = FALSE)", { # nolint: line_length_linter
+test_that("envvar_get() shows message if variable unset (and use_default = TRUE)", { # nolint: line_length_linter
   withr::local_envvar(c("TESTENV_ENVVAR" = NA))
-  expect_message(envvar_get("TESTENV_ENVVAR", error_if_unset = FALSE))
-  envvar_get("TESTENV_ENVVAR", default = "HELLO", error_if_unset = FALSE) |>
+  expect_message(envvar_get("TESTENV_ENVVAR", use_default = TRUE))
+  envvar_get("TESTENV_ENVVAR", default = "HELLO", use_default = TRUE) |>
     expect_equal("HELLO") |>
     expect_snapshot()
 })

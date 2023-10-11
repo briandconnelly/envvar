@@ -12,13 +12,13 @@
 envvar_get_integer <- function(x,
                                default = NA_integer_,
                                validate = NULL,
-                               error_if_unset = FALSE) {
+                               use_default = TRUE) {
   envvar_get(
     x,
     default = default,
     transform = as.integer,
     validate = validate,
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }
 
@@ -30,18 +30,18 @@ envvar_get_integer <- function(x,
 #' @examples
 #'
 #' # Get and use a numeric value
-#' # envvar_set("MYNUMBER" = 12.34)
-#' # envvar_get_numeric("MYNUMBER") + 5
+#' envvar_set("MYNUMBER" = 12.34)
+#' envvar_get_numeric("MYNUMBER") + 5
 envvar_get_numeric <- function(x,
                                default = NA_real_,
                                validate = NULL,
-                               error_if_unset = error_if_unset) {
+                               use_default = TRUE) {
   envvar_get(
     x,
     default = default,
     transform = as.numeric,
     validate = validate,
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }
 
@@ -57,13 +57,13 @@ envvar_get_numeric <- function(x,
 envvar_get_logical <- function(x,
                                default = NA,
                                validate = NULL,
-                               error_if_unset = FALSE) {
+                               use_default = TRUE) {
   envvar_get(
     x,
     default = default,
     transform = as.logical,
     validate = validate,
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }
 
@@ -79,13 +79,13 @@ envvar_get_logical <- function(x,
 envvar_get_version <- function(x,
                                default = NA,
                                validate = NULL,
-                               error_if_unset = FALSE) {
+                               use_default = TRUE) {
   envvar_get(
     x,
     default = default,
     transform = as.numeric_version,
     validate = validate,
-    error_if_unset = FALSE
+    use_default = use_default
   )
 }
 
@@ -98,7 +98,7 @@ envvar_get_version <- function(x,
 envvar_get_date <- function(x,
                             default = NA_character_,
                             validate = NULL,
-                            error_if_unset = FALSE,
+                            use_default = TRUE,
                             ...) {
   rlang::check_dots_used()
   envvar_get(
@@ -108,6 +108,6 @@ envvar_get_date <- function(x,
       as.Date(x, ...)
     },
     validate = validate,
-    error_if_unset = FALSE
+    use_default = use_default
   )
 }

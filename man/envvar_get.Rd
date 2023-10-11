@@ -10,7 +10,7 @@ envvar_get(
   default = NA_character_,
   transform = NULL,
   validate = NULL,
-  error_if_unset = FALSE
+  use_default = TRUE
 )
 
 envvar_get_oneof(
@@ -19,7 +19,7 @@ envvar_get_oneof(
   default = NA_character_,
   transform = NULL,
   validate = NULL,
-  error_if_unset = FALSE
+  use_default = TRUE
 )
 }
 \arguments{
@@ -32,8 +32,9 @@ variable's value}
 
 \item{validate}{Optional function that checks a value for validity}
 
-\item{error_if_unset}{Logical value indicating whether or not to raise an
-error if the given environment variable is not set (default: \code{FALSE}).}
+\item{use_default}{Logical value indicating whether the value specified by
+\code{default} should be used (\code{TRUE}, the default) or an error should be raised
+(\code{FALSE})}
 
 \item{choices}{A list containing the potential values}
 }
@@ -52,7 +53,7 @@ and ensures that it is within a defined set of potential values.
 \itemize{
 \item The value of the environment variable is retrieved. If that variable is
 not set, the value specified by \code{default} is used (or an error is raised if
-\code{error_if_unset} is \code{TRUE}).
+\code{use_default} is \code{FALSE}).
 \item Optionally, the value can be transformed by a function specified by the
 \code{transform} argument. Transformation functions return a scalar object.
 \item Optionally, the value can be validated by a function specified by the

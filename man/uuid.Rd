@@ -4,7 +4,7 @@
 \alias{envvar_get_uuid}
 \title{Environment variables for UUIDs}
 \usage{
-envvar_get_uuid(x, default = NA, validate = NULL, error_if_unset = FALSE)
+envvar_get_uuid(x, default = NA, validate = NULL, use_default = TRUE)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -13,8 +13,9 @@ envvar_get_uuid(x, default = NA, validate = NULL, error_if_unset = FALSE)
 
 \item{validate}{Optional function that checks a value for validity}
 
-\item{error_if_unset}{Logical value indicating whether or not to raise an
-error if the given environment variable is not set (default: \code{FALSE}).}
+\item{use_default}{Logical value indicating whether the value specified by
+\code{default} should be used (\code{TRUE}, the default) or an error should be raised
+(\code{FALSE})}
 }
 \description{
 \code{envvar_get_uuid} gets a UUID from an environment variable

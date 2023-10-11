@@ -8,7 +8,7 @@
 #' `envvar_get()` and the other type-specific variants follow this workflow:
 #' - The value of the environment variable is retrieved. If that variable is
 #' not set, the value specified by `default` is used (or an error is raised if
-#' `error_if_unset` is `TRUE`).
+#' `use_default` is `FALSE`).
 #' - Optionally, the value can be transformed by a function specified by the
 #' `transform` argument. Transformation functions return a scalar object.
 #' - Optionally, the value can be validated by a function specified by the
@@ -20,10 +20,11 @@
 #' @param x String containing an environment variable name
 #' @param default Optional default value if the environment variable is not set
 #' @param transform Optional function that applies a transformation to the
-#' variable's value
+#'   variable's value
 #' @param validate Optional function that checks a value for validity
-#' @param error_if_unset Logical value indicating whether or not to raise an
-#' error if the given environment variable is not set (default: `FALSE`).
+#' @param use_default Logical value indicating whether the value specified by
+#'   `default` should be used (`TRUE`, the default) or an error should be raised
+#'   (`FALSE`)
 #'
 #' @return The value of the given environment variable, if set. This is a string
 #'   unless a `transform` function has changed the object's type.
@@ -37,14 +38,14 @@ envvar_get <- function(x,
                        default = NA_character_,
                        transform = NULL,
                        validate = NULL,
-                       error_if_unset = FALSE) {
+                       use_default = TRUE) {
   assert_scalar_string(x)
   assert_function(transform, null_ok = TRUE)
   assert_function(validate, null_ok = TRUE)
-  assert_flag(error_if_unset)
+  assert_flag(use_default)
 
   if (!envvar_is_set(x)) {
-    if (error_if_unset) {
+    if (!use_default) {
       cli::cli_abort("Environment variable {.envvar {x}} is not set.")
     } else {
       cli::cli_alert_info("Environment variable {.envvar {x}} is not set. Using default value {.val {default}}.") # nolint: line_length_linter
@@ -85,7 +86,7 @@ envvar_get_oneof <- function(x,
                              default = NA_character_,
                              transform = NULL,
                              validate = NULL,
-                             error_if_unset = FALSE) {
+                             use_default = TRUE) {
   if (length(choices) < 1) {
     cli::cli_abort("{.arg choices} must include at least one valid choice")
   }
@@ -97,6 +98,6 @@ envvar_get_oneof <- function(x,
     validate = function(x) {
       x %in% choices
     },
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }

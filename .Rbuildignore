@@ -6,3 +6,4 @@
 ^NOTES.md$
 ^testing.R$
 ^\.github$
+^codecov\.yml$

@@ -12,25 +12,20 @@ envvar_get_integer(
   x,
   default = NA_integer_,
   validate = NULL,
-  error_if_unset = FALSE
+  use_default = TRUE
 )
 
-envvar_get_numeric(
-  x,
-  default = NA_real_,
-  validate = NULL,
-  error_if_unset = error_if_unset
-)
+envvar_get_numeric(x, default = NA_real_, validate = NULL, use_default = TRUE)
 
-envvar_get_logical(x, default = NA, validate = NULL, error_if_unset = FALSE)
+envvar_get_logical(x, default = NA, validate = NULL, use_default = TRUE)
 
-envvar_get_version(x, default = NA, validate = NULL, error_if_unset = FALSE)
+envvar_get_version(x, default = NA, validate = NULL, use_default = TRUE)
 
 envvar_get_date(
   x,
   default = NA_character_,
   validate = NULL,
-  error_if_unset = FALSE,
+  use_default = TRUE,
   ...
 )
 }
@@ -41,8 +36,9 @@ envvar_get_date(
 
 \item{validate}{Optional function that checks a value for validity}
 
-\item{error_if_unset}{Logical value indicating whether or not to raise an
-error if the given environment variable is not set (default: \code{FALSE}).}
+\item{use_default}{Logical value indicating whether the value specified by
+\code{default} should be used (\code{TRUE}, the default) or an error should be raised
+(\code{FALSE})}
 
 \item{...}{Additional arguments passed to \link{as.Date} for \code{envvar_date()}}
 }
@@ -69,8 +65,8 @@ envvar_set("MYNUMBER" = 12)
 envvar_get_integer("MYNUMBER") + 5
 
 # Get and use a numeric value
-# envvar_set("MYNUMBER" = 12.34)
-# envvar_get_numeric("MYNUMBER") + 5
+envvar_set("MYNUMBER" = 12.34)
+envvar_get_numeric("MYNUMBER") + 5
 
 # Check a logical value
 isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS"))

@@ -12,7 +12,7 @@
 envvar_get_url <- function(x,
                            default = NA,
                            validate = NULL,
-                           error_if_unset = FALSE) {
+                           use_default = TRUE) {
   rlang::check_installed("httr2")
 
   envvar_get(
@@ -20,7 +20,7 @@ envvar_get_url <- function(x,
     default = default,
     transform = httr2::url_parse,
     validate = validate,
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }
 
@@ -36,7 +36,7 @@ envvar_get_url <- function(x,
 envvar_get_ipaddress <- function(x,
                                  default = NA,
                                  validate = NULL,
-                                 error_if_unset = FALSE) {
+                                 use_default = TRUE) {
   rlang::check_installed("ipaddress")
 
   envvar_get(
@@ -50,6 +50,6 @@ envvar_get_ipaddress <- function(x,
       ip
     },
     validate = validate,
-    error_if_unset = error_if_unset
+    use_default = use_default
   )
 }
