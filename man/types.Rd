@@ -6,6 +6,7 @@
 \alias{envvar_get_logical}
 \alias{envvar_get_version}
 \alias{envvar_get_date}
+\alias{envvar_get_datetime}
 \title{Get the value of an environment variable as a particular type}
 \usage{
 envvar_get_integer(
@@ -28,6 +29,14 @@ envvar_get_date(
   use_default = TRUE,
   ...
 )
+
+envvar_get_datetime(
+  x,
+  default = NA_character_,
+  validate = NULL,
+  use_default = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -40,7 +49,8 @@ envvar_get_date(
 \code{default} should be used (\code{TRUE}, the default) or an error should be raised
 (\code{FALSE})}
 
-\item{...}{Additional arguments passed to \link{as.Date} for \code{envvar_date()}}
+\item{...}{Additional arguments passed to \link[lubridate:as_date]{lubridate::as_date} for
+\code{envvar_get_date()} or \link[lubridate:as_date]{lubridate::as_datetime} for \code{envvar_get_datetime()}}
 }
 \description{
 \code{envvar_get_integer()} reads environment variables with integer
@@ -57,6 +67,9 @@ version numbers (e.g., \verb{4.3.1})
 
 \code{envvar_get_date()} reads environment variables with date values
 (e.g., \code{"2023-01-02"})
+
+\code{envvar_get_date()} reads environment variables with date-time
+values (e.g., \code{"2023-01-02 01:23:45 UTC"} or 1697037804)
 }
 \examples{
 

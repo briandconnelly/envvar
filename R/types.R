@@ -93,7 +93,8 @@ envvar_get_version <- function(x,
 #' @rdname types
 #' @description `envvar_get_date()` reads environment variables with date values
 #'   (e.g., `"2023-01-02"`)
-#' @param ... Additional arguments passed to [as.Date] for `envvar_date()`
+#' @param ... Additional arguments passed to [lubridate::as_date] for
+#'   `envvar_get_date()` or [lubridate::as_datetime] for `envvar_get_datetime()`
 #' @export
 envvar_get_date <- function(x,
                             default = NA_character_,
@@ -105,7 +106,31 @@ envvar_get_date <- function(x,
     x,
     default = default,
     transform = function(x) {
-      as.Date(x, ...)
+      lubridate::as_date(x, ...)
+    },
+    validate = validate,
+    use_default = use_default
+  )
+}
+
+
+#' @rdname types
+#' @description `envvar_get_date()` reads environment variables with date-time
+#'   values (e.g., `"2023-01-02 01:23:45 UTC"` or 1697037804)
+#' @param ... Additional arguments passed to [lubridate::as_date] for
+#'   `envvar_get_date()` or [lubridate::as_datetime] for `envvar_get_datetime()`
+#' @export
+envvar_get_datetime <- function(x,
+                                default = NA_character_,
+                                validate = NULL,
+                                use_default = TRUE,
+                                ...) {
+  rlang::check_dots_used()
+  envvar_get(
+    x,
+    default = default,
+    transform = function(x) {
+      lubridate::as_datetime(x, ...)
     },
     validate = validate,
     use_default = use_default

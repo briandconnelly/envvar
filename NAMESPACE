@@ -2,6 +2,7 @@
 
 export(envvar_get)
 export(envvar_get_date)
+export(envvar_get_datetime)
 export(envvar_get_dir)
 export(envvar_get_file)
 export(envvar_get_integer)
