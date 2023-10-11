@@ -16,7 +16,7 @@ envvar_get_uuid <- function(x,
   rlang::check_installed("uuid")
 
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = function(x) {
       uuid <- uuid::as.UUID(x)

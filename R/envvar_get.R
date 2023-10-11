@@ -41,7 +41,7 @@ envvar_get <- function(x,
   assert_scalar_string(x)
   assert_function(transform, null_ok = TRUE)
   assert_function(validate, null_ok = TRUE)
-  assert_flag(error_if_unset, na_ok = FALSE, null_ok = FALSE)
+  assert_flag(error_if_unset)
 
   if (!envvar_is_set(x)) {
     if (error_if_unset) {
@@ -91,7 +91,7 @@ envvar_get_oneof <- function(x,
   }
 
   envvar_get(
-    x = x,
+    x,
     default = NA_character_,
     transform = transform,
     validate = function(x) {

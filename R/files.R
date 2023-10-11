@@ -20,7 +20,7 @@ envvar_get_file <- function(x,
                             create = TRUE,
                             error_if_unset = FALSE) {
   envvar_get(
-    x = x,
+    x,
     default = NA_character_,
     transform = transform,
     validate = function(x) {
@@ -52,7 +52,7 @@ envvar_get_dir <- function(x,
                            check_writable = FALSE,
                            error_if_unset = FALSE) {
   envvar_get(
-    x = x,
+    x,
     default = NA_character_,
     transform = transform,
     validate = function(x) {

@@ -54,11 +54,7 @@ assert_flag <- function(x,
                         null_ok = FALSE,
                         arg = rlang::caller_arg(x),
                         call = rlang::caller_env()) {
-  if (rlang::is_null(x) && isFALSE(null_ok)) {
-    cli::cli_abort("{.arg {arg}} must be single logical value", call = call)
-  } else if (rlang::is_na(x) && isFALSE(na_ok)) {
-    cli::cli_abort("{.arg {arg}} must be single logical value", call = call)
-  } else if (!rlang::is_scalar_logical(x)) {
+  if ((rlang::is_na(x) && isFALSE(na_ok)) || (rlang::is_null(x) && isFALSE(null_ok)) || !rlang::is_scalar_logical(x)) { # nolint: line_length_linter
     cli::cli_abort("{.arg {arg}} must be single logical value", call = call)
   }
 }

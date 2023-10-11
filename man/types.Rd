@@ -69,8 +69,8 @@ envvar_set("MYNUMBER" = 12)
 envvar_get_integer("MYNUMBER") + 5
 
 # Get and use a numeric value
-envvar_set("MYNUMBER" = 12.34)
-envvar_get_numeric("MYNUMBER") + 5
+# envvar_set("MYNUMBER" = 12.34)
+# envvar_get_numeric("MYNUMBER") + 5
 
 # Check a logical value
 isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS"))

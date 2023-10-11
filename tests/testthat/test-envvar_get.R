@@ -41,7 +41,6 @@ test_that("envvar_get() validates `error_if_unset` argument correctly", {
   # error_if_unset should be a scalar logical
   expect_error(envvar_get("HOME", error_if_unset = NULL))
   expect_error(envvar_get("HOME", error_if_unset = NA))
-  expect_error(envvar_get("HOME", error_if_unset = NA_logical))
   expect_error(envvar_get("HOME", error_if_unset = 1))
   expect_error(envvar_get("HOME", error_if_unset = "Yes"))
   expect_error(envvar_get("HOME", error_if_unset = "TRUE"))

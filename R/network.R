@@ -16,7 +16,7 @@ envvar_get_url <- function(x,
   rlang::check_installed("httr2")
 
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = httr2::url_parse,
     validate = validate,
@@ -40,7 +40,7 @@ envvar_get_ipaddress <- function(x,
   rlang::check_installed("ipaddress")
 
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = function(x) {
       ip <- suppressWarnings(ipaddress::as_ip_address(x))

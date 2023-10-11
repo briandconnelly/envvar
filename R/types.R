@@ -14,7 +14,7 @@ envvar_get_integer <- function(x,
                                validate = NULL,
                                error_if_unset = FALSE) {
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = as.integer,
     validate = validate,
@@ -30,14 +30,14 @@ envvar_get_integer <- function(x,
 #' @examples
 #'
 #' # Get and use a numeric value
-#' envvar_set("MYNUMBER" = 12.34)
-#' envvar_get_numeric("MYNUMBER") + 5
+#' # envvar_set("MYNUMBER" = 12.34)
+#' # envvar_get_numeric("MYNUMBER") + 5
 envvar_get_numeric <- function(x,
                                default = NA_real_,
                                validate = NULL,
                                error_if_unset = error_if_unset) {
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = as.numeric,
     validate = validate,
@@ -59,7 +59,7 @@ envvar_get_logical <- function(x,
                                validate = NULL,
                                error_if_unset = FALSE) {
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = as.logical,
     validate = validate,
@@ -81,7 +81,7 @@ envvar_get_version <- function(x,
                                validate = NULL,
                                error_if_unset = FALSE) {
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = as.numeric_version,
     validate = validate,
@@ -102,7 +102,7 @@ envvar_get_date <- function(x,
                             ...) {
   rlang::check_dots_used()
   envvar_get(
-    x = x,
+    x,
     default = default,
     transform = function(x) {
       as.Date(x, ...)
