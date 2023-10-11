@@ -4,9 +4,13 @@ Version: 0.0.0.9000
 Authors@R:
     person("Brian", "Connelly", , "bdc@bconnelly.net", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-9948-0379"))
-Description: envvar makes it easy to set, check, retrieve, transform, and 
-  validate environment variables.
+Description: envvar makes it easy to set, check, retrieve, transform, and
+    validate environment variables.
 License: MIT + file LICENSE
+Imports: 
+    cli,
+    fs,
+    rlang
 Suggests: 
     httr2,
     ipaddress,
@@ -19,7 +23,3 @@ Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Imports: 
-    cli,
-    fs,
-    rlang
