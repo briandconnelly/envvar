@@ -48,10 +48,12 @@ variable
 \examples{
 
 # Get a file path and make sure it exists
+\dontrun{
 envvar_set("MYDATA" = "/tmp/data.parquet")
-envvar_get_file("MYDATA")
+envvar_get_file("MYDATA")}
 
 # Get a file path and make sure it exists
+\dontrun{
 envvar_set("MYDATADIR" = "/tmp/data/")
-envvar_get_dir("MYDATADIR")
+envvar_get_dir("MYDATADIR")}
 }
