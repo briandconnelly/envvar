@@ -16,6 +16,10 @@
 #' @examples
 #' # Get the value of `$PATH`, creating a list with elements for each directory
 #' envvar_get_list("PATH")
+#'
+#' # Parse an list separated by `|`
+#' envvar_set("ROOMMATES" = "nandor|laszlo|nadja|guillermo|colin")
+#' envvar_get_psv("ROOMMATES")
 envvar_get_list <- function(x,
                             pattern = ":",
                             default = NA,
@@ -31,6 +35,42 @@ envvar_get_list <- function(x,
     transform = function(x) {
       strsplit(x, split = pattern, ...)[[1]]
     },
+    validate = validate,
+    use_default = use_default
+  )
+}
+
+
+#' @rdname list
+#' @description  `envvar_get_csv()` and `envvar_get_psv()` are an easy way to
+#' use `envvar_get_list()` with comma or pipe separators.
+#' @export
+#'
+envvar_get_csv <- function(x,
+                           default = NA,
+                           validate = NULL,
+                           use_default = TRUE) {
+  envvar_get_list(
+    x,
+    pattern = "\\s*,\\s*",
+    default = default,
+    validate = validate,
+    use_default = use_default
+  )
+}
+
+
+#' @rdname list
+#' @export
+#'
+envvar_get_psv <- function(x,
+                           default = NA,
+                           validate = NULL,
+                           use_default = TRUE) {
+  envvar_get_list(
+    x,
+    pattern = "\\s*\\|\\s*",
+    default = default,
     validate = validate,
     use_default = use_default
   )

@@ -2,6 +2,8 @@
 % Please edit documentation in R/envvar_get_list.R
 \name{envvar_get_list}
 \alias{envvar_get_list}
+\alias{envvar_get_csv}
+\alias{envvar_get_psv}
 \title{Environment variables containing lists}
 \usage{
 envvar_get_list(
@@ -12,6 +14,10 @@ envvar_get_list(
   use_default = TRUE,
   ...
 )
+
+envvar_get_csv(x, default = NA, validate = NULL, use_default = TRUE)
+
+envvar_get_psv(x, default = NA, validate = NULL, use_default = TRUE)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -35,8 +41,15 @@ A list
 \description{
 \code{envvar_get_list() } gets lists from environment variables. At
 the moment, only unnamed lists are supported.
+
+\code{envvar_get_csv()} and \code{envvar_get_psv()} are an easy way to
+use \code{envvar_get_list()} with comma or pipe separators.
 }
 \examples{
 # Get the value of `$PATH`, creating a list with elements for each directory
 envvar_get_list("PATH")
+
+# Parse an list separated by `|`
+envvar_set("ROOMMATES" = "nandor|laszlo|nadja|guillermo|colin")
+envvar_get_psv("ROOMMATES")
 }
