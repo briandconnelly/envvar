@@ -56,17 +56,17 @@ variable</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">envvar_get_file</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
+<span>  create <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  check_readable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_writable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  create <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  use_default <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">envvar_get_dir</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  create <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  check_readable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_writable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  use_default <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -77,6 +77,11 @@ variable</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>String containing an environment variable name</p></dd>
+
+
+<dt>create</dt>
+<dd><p>Create the file or directory if it does not exist (default:
+<code>TRUE</code>)</p></dd>
 
 
 <dt>check_readable</dt>
@@ -90,11 +95,6 @@ variable</p>
 <dt>transform</dt>
 <dd><p>Optional function that applies a transformation to the
 variable's value</p></dd>
-
-
-<dt>create</dt>
-<dd><p>Create the file or directory if it does not exist (default:
-<code>TRUE</code>)</p></dd>
 
 
 <dt>use_default</dt>
