@@ -70,6 +70,12 @@ test_that("envvar_get_file() warns if ... not used properly", {
   expect_error(envvar_get_file("ENVVAR_TEMP_FILE_EXISTS", blah = TRUE))
 })
 
+test_that("envvar_get_file() works as expected", {
+  expect_equal(
+    envvar_get_file("ENVVAR_TEMP_FILE_EXISTS", create = FALSE),
+    tempfile_exists
+  )
+})
 
 test_that("envvar_get_dir() validates `x` arguments correctly", {
   # `x` should be specified and a scalar string
@@ -288,5 +294,12 @@ test_that("validate_dir() `create` arg works as expected", {
       check_readable = FALSE,
       check_writable = FALSE
     )
+  )
+})
+
+test_that("envvar_get_dir() works as expected", {
+  expect_equal(
+    envvar_get_dir("ENVVAR_TEMP_DIR_EXISTS", create = FALSE),
+    tempdir_exists
   )
 })
