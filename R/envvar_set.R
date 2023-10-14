@@ -26,5 +26,10 @@ envvar_set <- function(...) {
 #' envvar_unset("DEBUG")
 envvar_unset <- function(x) {
   assert_scalar_string(x)
+
+  if (!envvar_is_set(x)) {
+    cli::cli_alert_info("Environment variable {.envvar {x}} is not set.")
+  }
+
   Sys.unsetenv(x)
 }
