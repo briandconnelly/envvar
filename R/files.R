@@ -16,11 +16,15 @@
 #' envvar_get_file("MYDATA")
 #' }
 envvar_get_file <- function(x,
+                            create = TRUE,
                             check_readable = FALSE,
                             check_writable = FALSE,
                             transform = NULL,
-                            create = TRUE,
                             use_default = TRUE) {
+  assert_flag(create)
+  assert_flag(check_readable)
+  assert_flag(check_writable)
+
   envvar_get(
     x,
     default = NA_character_,
@@ -29,13 +33,35 @@ envvar_get_file <- function(x,
       validate_file(
         x,
         create = create,
-        is_readable = check_readable,
-        is_writable = check_writable
+        check_readable = check_readable,
+        check_writable = check_writable
       )
     },
     use_default = use_default
   )
 }
+
+
+#' @noRd
+validate_file <- function(x,
+                          create = TRUE,
+                          check_readable = TRUE,
+                          check_writable = FALSE) {
+  if (!fs::file_exists(x) && isTRUE(create)) {
+    cli::cli_alert_info("File {.file {x}} does not exist. Creating.")
+    fs::file_create(x)
+  }
+
+  modes <- c("exists")
+  if (check_readable) {
+    modes <- c(modes, "read")
+  }
+  if (check_writable) {
+    modes <- c(modes, "write")
+  }
+  fs::file_access(x, mode = modes)
+}
+
 
 #' @rdname files
 #' @description `envvar_get_dir` gets a directory name from an environment
@@ -50,11 +76,15 @@ envvar_get_file <- function(x,
 #' envvar_get_dir("MYDATADIR")
 #' }
 envvar_get_dir <- function(x,
-                           transform = NULL,
                            create = TRUE,
+                           transform = NULL,
                            check_readable = FALSE,
                            check_writable = FALSE,
                            use_default = TRUE) {
+  assert_flag(create)
+  assert_flag(check_readable)
+  assert_flag(check_writable)
+
   envvar_get(
     x,
     default = NA_character_,
@@ -63,10 +93,31 @@ envvar_get_dir <- function(x,
       validate_dir(
         x,
         create = create,
-        is_readable = check_readable,
-        is_writable = check_writable
+        check_readable = check_readable,
+        check_writable = check_writable
       )
     },
     use_default = use_default
   )
+}
+
+
+#' @noRd
+validate_dir <- function(x,
+                         create = TRUE,
+                         check_readable = TRUE,
+                         check_writable = FALSE) {
+  if (!fs::dir_exists(x) && isTRUE(create)) {
+    cli::cli_alert_info("Directory {.file {x}} does not exist. Creating.")
+    fs::dir_create(x)
+  }
+
+  modes <- c("exists")
+  if (check_readable) {
+    modes <- c(modes, "read")
+  }
+  if (check_writable) {
+    modes <- c(modes, "write")
+  }
+  fs::file_access(x, mode = modes)
 }

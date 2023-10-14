@@ -7,17 +7,17 @@
 \usage{
 envvar_get_file(
   x,
+  create = TRUE,
   check_readable = FALSE,
   check_writable = FALSE,
   transform = NULL,
-  create = TRUE,
   use_default = TRUE
 )
 
 envvar_get_dir(
   x,
-  transform = NULL,
   create = TRUE,
+  transform = NULL,
   check_readable = FALSE,
   check_writable = FALSE,
   use_default = TRUE
@@ -26,15 +26,15 @@ envvar_get_dir(
 \arguments{
 \item{x}{String containing an environment variable name}
 
+\item{create}{Create the file or directory if it does not exist (default:
+\code{TRUE})}
+
 \item{check_readable}{Ensure that the file or directory is readable}
 
 \item{check_writable}{Ensure that the file or directory is writable}
 
 \item{transform}{Optional function that applies a transformation to the
 variable's value}
-
-\item{create}{Create the file or directory if it does not exist (default:
-\code{TRUE})}
 
 \item{use_default}{Logical value indicating whether the value specified by
 \code{default} should be used (\code{TRUE}, the default) or an error should be raised
