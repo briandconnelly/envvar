@@ -60,7 +60,8 @@ variable</p>
 <span>  check_readable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_writable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  use_default <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  use_default <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">envvar_get_dir</span><span class="op">(</span></span>
@@ -69,7 +70,8 @@ variable</p>
 <span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  check_readable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_writable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  use_default <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  use_default <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -101,6 +103,11 @@ variable's value</p></dd>
 <dd><p>Logical value indicating whether the value specified by
 <code>default</code> should be used (<code>TRUE</code>, the default) or an error should be raised
 (<code>FALSE</code>)</p></dd>
+
+
+<dt>...</dt>
+<dd><p>Additional arguments passed to <a href="https://fs.r-lib.org/reference/create.html" class="external-link">fs::file_create</a> for
+<code>envvar_get_file()</code> or <a href="https://fs.r-lib.org/reference/create.html" class="external-link">fs::dir_create</a> for <code>envvar_get_dir()</code></p></dd>
 
 </dl></div>
 
