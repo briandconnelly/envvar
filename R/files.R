@@ -2,11 +2,13 @@
 #' @title Environment variables for files and directories
 
 #' @description `envvar_get_file` gets a file name from an environment variable
+#' @inheritParams envvar_get
 #' @param create Create the file or directory if it does not exist (default:
 #'   `TRUE`)
 #' @param check_readable Ensure that the file or directory is readable
 #' @param check_writable Ensure that the file or directory is writable
-#' @inheritParams envvar_get
+#' @param ... Additional arguments passed to [fs::file_create] for
+#'   `envvar_get_file()` or [fs::dir_create] for `envvar_get_dir()`
 #' @export
 #' @examples
 #'
@@ -20,10 +22,12 @@ envvar_get_file <- function(x,
                             check_readable = FALSE,
                             check_writable = FALSE,
                             transform = NULL,
-                            use_default = TRUE) {
+                            use_default = TRUE,
+                            ...) {
   assert_flag(create)
   assert_flag(check_readable)
   assert_flag(check_writable)
+  rlang::check_dots_used()
 
   envvar_get(
     x,
@@ -34,7 +38,8 @@ envvar_get_file <- function(x,
         x,
         create = create,
         check_readable = check_readable,
-        check_writable = check_writable
+        check_writable = check_writable,
+        ...
       )
     },
     use_default = use_default
@@ -46,10 +51,11 @@ envvar_get_file <- function(x,
 validate_file <- function(x,
                           create = TRUE,
                           check_readable = TRUE,
-                          check_writable = FALSE) {
+                          check_writable = FALSE,
+                          ...) {
   if (!fs::file_exists(x) && isTRUE(create)) {
     cli::cli_alert_info("File {.file {x}} does not exist. Creating.")
-    fs::file_create(x)
+    fs::file_create(x, ...)
   }
 
   modes <- c("exists")
@@ -80,10 +86,12 @@ envvar_get_dir <- function(x,
                            transform = NULL,
                            check_readable = FALSE,
                            check_writable = FALSE,
-                           use_default = TRUE) {
+                           use_default = TRUE,
+                           ...) {
   assert_flag(create)
   assert_flag(check_readable)
   assert_flag(check_writable)
+  rlang::check_dots_used()
 
   envvar_get(
     x,
@@ -94,7 +102,8 @@ envvar_get_dir <- function(x,
         x,
         create = create,
         check_readable = check_readable,
-        check_writable = check_writable
+        check_writable = check_writable,
+        ...
       )
     },
     use_default = use_default
@@ -106,10 +115,11 @@ envvar_get_dir <- function(x,
 validate_dir <- function(x,
                          create = TRUE,
                          check_readable = TRUE,
-                         check_writable = FALSE) {
+                         check_writable = FALSE,
+                         ...) {
   if (!fs::dir_exists(x) && isTRUE(create)) {
     cli::cli_alert_info("Directory {.file {x}} does not exist. Creating.")
-    fs::dir_create(x)
+    fs::dir_create(x, ...)
   }
 
   modes <- c("exists")

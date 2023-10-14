@@ -66,6 +66,10 @@ test_that("envvar_get_file() validates `check_writable` arguments correctly", {
   )
 })
 
+test_that("envvar_get_file() warns if ... not used properly", {
+  expect_error(envvar_get_file("ENVVAR_TEMP_FILE_EXISTS", blah = TRUE))
+})
+
 
 test_that("envvar_get_dir() validates `x` arguments correctly", {
   # `x` should be specified and a scalar string
@@ -110,6 +114,10 @@ test_that("envvar_get_dir() validates `check_writable` arguments correctly", {
   expect_error(
     envvar_get_dir("ENVVAR_TEMP_DIR_EXISTS", check_writable = c(TRUE, FALSE))
   )
+})
+
+test_that("envvar_get_dir() warns if ... not used properly", {
+  expect_error(envvar_get_dir("ENVVAR_TEMP_DIR_EXISTS", blah = TRUE))
 })
 
 test_that("validate_file() `create` arg works as expected", {

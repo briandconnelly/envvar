@@ -11,7 +11,8 @@ envvar_get_file(
   check_readable = FALSE,
   check_writable = FALSE,
   transform = NULL,
-  use_default = TRUE
+  use_default = TRUE,
+  ...
 )
 
 envvar_get_dir(
@@ -20,7 +21,8 @@ envvar_get_dir(
   transform = NULL,
   check_readable = FALSE,
   check_writable = FALSE,
-  use_default = TRUE
+  use_default = TRUE,
+  ...
 )
 }
 \arguments{
@@ -39,6 +41,9 @@ variable's value}
 \item{use_default}{Logical value indicating whether the value specified by
 \code{default} should be used (\code{TRUE}, the default) or an error should be raised
 (\code{FALSE})}
+
+\item{...}{Additional arguments passed to \link[fs:create]{fs::file_create} for
+\code{envvar_get_file()} or \link[fs:create]{fs::dir_create} for \code{envvar_get_dir()}}
 }
 \description{
 \code{envvar_get_file} gets a file name from an environment variable
