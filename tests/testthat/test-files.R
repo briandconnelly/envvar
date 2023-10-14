@@ -1,3 +1,6 @@
+# Some of these tests aren't working on Windows
+skip_on_os("windows")
+
 tempfile_exists <- withr::local_tempfile()
 fs::file_create(tempfile_exists, mode = "644")
 
