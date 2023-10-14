@@ -5,22 +5,9 @@
 \alias{envvar_get_oneof}
 \title{Get the value of an environment variable}
 \usage{
-envvar_get(
-  x,
-  default = NA_character_,
-  transform = NULL,
-  validate = NULL,
-  use_default = TRUE
-)
+envvar_get(x, default = NULL, transform = NULL, validate = NULL)
 
-envvar_get_oneof(
-  x,
-  choices,
-  default = NA_character_,
-  transform = NULL,
-  validate = NULL,
-  use_default = TRUE
-)
+envvar_get_oneof(x, choices, default = NULL, transform = NULL, validate = NULL)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -31,10 +18,6 @@ envvar_get_oneof(
 variable's value}
 
 \item{validate}{Optional function that checks a value for validity}
-
-\item{use_default}{Logical value indicating whether the value specified by
-\code{default} should be used (\code{TRUE}, the default) or an error should be raised
-(\code{FALSE})}
 
 \item{choices}{A list containing the potential values}
 }
@@ -52,8 +35,8 @@ and ensures that it is within a defined set of potential values.
 \code{envvar_get()} and the other type-specific variants follow this workflow:
 \itemize{
 \item The value of the environment variable is retrieved. If that variable is
-not set, the value specified by \code{default} is used (or an error is raised if
-\code{use_default} is \code{FALSE}).
+not set and \code{default} non-NULL, the default value is used. Otherwise an error
+is raised.
 \item Optionally, the value can be transformed by a function specified by the
 \code{transform} argument. Transformation functions return a scalar object.
 \item Optionally, the value can be validated by a function specified by the

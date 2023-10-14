@@ -9,34 +9,17 @@
 \alias{envvar_get_datetime}
 \title{Get the value of an environment variable as a particular type}
 \usage{
-envvar_get_integer(
-  x,
-  default = NA_integer_,
-  validate = NULL,
-  use_default = TRUE
-)
+envvar_get_integer(x, default = NULL, validate = NULL)
 
-envvar_get_numeric(x, default = NA_real_, validate = NULL, use_default = TRUE)
+envvar_get_numeric(x, default = NULL, validate = NULL)
 
-envvar_get_logical(x, default = NA, validate = NULL, use_default = TRUE)
+envvar_get_logical(x, default = NULL, validate = NULL)
 
-envvar_get_version(x, default = NA, validate = NULL, use_default = TRUE)
+envvar_get_version(x, default = NULL, validate = NULL)
 
-envvar_get_date(
-  x,
-  default = NA_character_,
-  validate = NULL,
-  use_default = TRUE,
-  ...
-)
+envvar_get_date(x, default = NULL, validate = NULL, ...)
 
-envvar_get_datetime(
-  x,
-  default = NA_character_,
-  validate = NULL,
-  use_default = TRUE,
-  ...
-)
+envvar_get_datetime(x, default = NULL, validate = NULL, ...)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -44,10 +27,6 @@ envvar_get_datetime(
 \item{default}{Optional default value if the environment variable is not set}
 
 \item{validate}{Optional function that checks a value for validity}
-
-\item{use_default}{Logical value indicating whether the value specified by
-\code{default} should be used (\code{TRUE}, the default) or an error should be raised
-(\code{FALSE})}
 
 \item{...}{Additional arguments passed to \link[lubridate:as_date]{lubridate::as_date} for
 \code{envvar_get_date()} or \link[lubridate:as_date]{lubridate::as_datetime} for \code{envvar_get_datetime()}}

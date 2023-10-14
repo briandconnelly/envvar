@@ -14,19 +14,18 @@
       Error in `envvar_get()`:
       ! `validate` must be a function
 
-# envvar_get() errors if variable unset (and use_default = FALSE)
+# envvar_get() errors if variable unset (and `default` is NULL)
 
     Code
-      envvar_get("TESTENV_ENVVAR", use_default = FALSE)
+      envvar_get("TESTENV_ENVVAR")
     Condition
       Error in `envvar_get()`:
       ! Environment variable `TESTENV_ENVVAR` is not set.
 
-# envvar_get() shows message if variable unset (and use_default = TRUE)
+# envvar_get() shows message if variable unset and `default` given
 
     Code
-      expect_equal(envvar_get("TESTENV_ENVVAR", default = "HELLO", use_default = TRUE),
-      "HELLO")
+      expect_equal(envvar_get("TESTENV_ENVVAR", default = "HELLO"), "HELLO")
     Message
       i Environment variable `TESTENV_ENVVAR` is not set. Using default value "HELLO".
 

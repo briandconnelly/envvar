@@ -13,9 +13,10 @@ test_that("`envvar_get_integer()` works as expected", {
   expect_error(
     envvar_get_integer("ENVVAR_TEST_INT_NOTSET", use_default = FALSE)
   )
+  # `default` should be integer-like
+  expect_error(envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 23.31))
   expect_no_error(envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210))
-  expect_true(is.integer(envvar_get_integer("ENVVAR_TEST_INT_NOTSET")))
-  expect_true(rlang::is_na(envvar_get_integer("ENVVAR_TEST_INT_NOTSET")))
+  expect_error(envvar_get_integer("ENVVAR_TEST_INT_NOTSET"))
   expect_equal(
     envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210),
     90210
@@ -47,12 +48,8 @@ test_that("`envvar_get_numeric()` works as expected", {
   expect_true(is.numeric(envvar_get_numeric("ENVVAR_TEST_NUM1")))
   expect_equal(envvar_get_numeric("ENVVAR_TEST_NUM1"), 12.34)
 
-  expect_error(
-    envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", use_default = FALSE)
-  )
+  expect_error(envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET"))
   expect_no_error(envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = 1.23))
-  expect_true(is.numeric(envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET")))
-  expect_true(rlang::is_na(envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET")))
   expect_equal(
     envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = 123.45),
     123.45
@@ -81,27 +78,24 @@ test_that("`envvar_get_logical()` works as expected", {
     )
   )
 
-  expect_true(rlang::is_logical(envvar_get_logical("ENVVAR_TEST_INT1")))
+  expect_true(rlang::is_logical(envvar_get_logical("TEST_LOGICAL1")))
   expect_true(envvar_get_logical("TEST_LOGICAL1"))
   expect_false(envvar_get_logical("TEST_LOGICAL2"))
 
-  expect_no_error(envvar_get_logical("TEST_NOTSET"))
-  expect_true(rlang::is_logical(envvar_get_logical("TEST_NOTSET")))
-  expect_error(envvar_get_logical("TEST_NOTSET", use_default = FALSE))
+  expect_error(envvar_get_logical("TEST_NOTSET"))
+  expect_error(envvar_get_logical("TEST_LOGICAL1", default = 123.4))
   expect_true(envvar_get_logical("TEST_NOTSET", default = TRUE))
   expect_false(envvar_get_logical("TEST_NOTSET", default = FALSE))
 
   expect_true(
     envvar_get_logical(
       "TEST_LOGICAL1",
-      use_default = FALSE,
       validate = is.logical
     )
   )
   expect_error(
     envvar_get_logical(
       "TEST_LOGICAL1",
-      use_default = FALSE,
       validate = is.numeric
     )
   )
@@ -110,14 +104,6 @@ test_that("`envvar_get_logical()` works as expected", {
     envvar_get_logical(
       "TEST_NOTSET",
       default = TRUE,
-      validate = is.logical
-    )
-  )
-
-  expect_no_error(
-    envvar_get_logical(
-      "TEST_NOTSET",
-      default = 23.31,
       validate = is.logical
     )
   )
@@ -172,7 +158,7 @@ test_that("`envvar_get_date() works as expected", {
   expect_true(lubridate::is.Date(envvar_get_date("TEST_DATE")))
   expect_equal(envvar_get_date("TEST_DATE"), lubridate::as_date("2023-01-02"))
 
-  expect_error(envvar_get_date("TEST_NOTSET", use_default = FALSE))
+  expect_error(envvar_get_date("TEST_NOTSET"))
   expect_no_error(envvar_get_date("TEST_NOTSET", default = "2023-09-09"))
   expect_true(
     lubridate::is.Date(
@@ -216,16 +202,16 @@ test_that("`envvar_get_datetime() works as expected", {
 
   # Error raised if ... are bad
   expect_error(
-    envvar_get_datetime("TEST_DATE", defaults = "2023-01-02 04:05:05 UTC")
+    envvar_get_datetime("TEST_DATETIME", default = "2023-01-01", extra = TRUE)
   )
 
-  expect_true(lubridate::is.POSIXct(envvar_get_datetime("TEST_DATE")))
+  expect_true(lubridate::is.POSIXct(envvar_get_datetime("TEST_DATETIME")))
   expect_equal(
     envvar_get_datetime("TEST_DATETIME"),
     lubridate::as_datetime("2023-01-02 04:05:05 UTC")
   )
 
-  expect_error(envvar_get_datetime("TEST_NOTSET", use_default = FALSE))
+  expect_error(envvar_get_datetime("TEST_NOTSET"))
   expect_no_error(envvar_get_datetime("TEST_NOTSET", default = "2023-09-09"))
   expect_true(
     lubridate::is.POSIXct(

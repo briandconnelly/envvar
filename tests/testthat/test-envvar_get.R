@@ -6,11 +6,6 @@ test_that("envvar_get() validates `x` argument correctly", {
   expect_error(envvar_get(x = c("HOME", "USER")))
 })
 
-test_that("envvar_get() validates `default` argument correctly", {
-  # x should be a scalar
-  expect_error(envvar_get("HOME", default = c(1, 2)))
-})
-
 test_that("envvar_get() validates `transform` argument correctly", {
   # transform should be a single function or NULL
   expect_error(envvar_get("HOME", transform = NA))
@@ -47,19 +42,16 @@ test_that("envvar_get() validates `use_default` argument correctly", {
   expect_error(envvar_get("HOME", use_default = c(TRUE, FALSE)))
 })
 
-test_that("envvar_get() errors if variable unset (and use_default = FALSE)", {
+test_that("envvar_get() errors if variable unset (and `default` is NULL)", {
   withr::local_envvar(c("TESTENV_ENVVAR" = NA))
-  expect_error(envvar_get("TESTENV_ENVVAR", use_default = FALSE))
-  expect_snapshot(
-    envvar_get("TESTENV_ENVVAR", use_default = FALSE),
-    error = TRUE
-  )
+  expect_error(envvar_get("TESTENV_ENVVAR"))
+  expect_snapshot(envvar_get("TESTENV_ENVVAR"), error = TRUE)
 })
 
-test_that("envvar_get() shows message if variable unset (and use_default = TRUE)", { # nolint: line_length_linter
+test_that("envvar_get() shows message if variable unset and `default` given", {
   withr::local_envvar(c("TESTENV_ENVVAR" = NA))
-  expect_message(envvar_get("TESTENV_ENVVAR", use_default = TRUE))
-  envvar_get("TESTENV_ENVVAR", default = "HELLO", use_default = TRUE) |>
+  expect_message(envvar_get("TESTENV_ENVVAR", default = "HELLO"))
+  envvar_get("TESTENV_ENVVAR", default = "HELLO") |>
     expect_equal("HELLO") |>
     expect_snapshot()
 })

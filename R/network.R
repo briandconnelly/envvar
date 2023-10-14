@@ -10,17 +10,15 @@
 #' envvar_set("TEST_URL" = "https://google.com:80/?a=1&b=2")
 #' envvar_get_url("TEST_URL", validate = \(x) x$scheme == "https")
 envvar_get_url <- function(x,
-                           default = NA,
-                           validate = NULL,
-                           use_default = TRUE) {
+                           default = NULL,
+                           validate = NULL) {
   rlang::check_installed("httr2")
 
   envvar_get(
     x,
     default = default,
     transform = httr2::url_parse,
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -34,9 +32,8 @@ envvar_get_url <- function(x,
 #' envvar_set("TEST_HOST" = "192.168.1.15")
 #' envvar_get_ipaddress("TEST_HOST", validate = ipaddress::is_ipv4)
 envvar_get_ipaddress <- function(x,
-                                 default = NA,
-                                 validate = NULL,
-                                 use_default = TRUE) {
+                                 default = NULL,
+                                 validate = NULL) {
   rlang::check_installed("ipaddress")
 
   envvar_get(
@@ -49,7 +46,6 @@ envvar_get_ipaddress <- function(x,
       }
       ip
     },
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }

@@ -31,7 +31,7 @@ assert_function <- function(x,
                             null_ok = FALSE,
                             arg = rlang::caller_arg(x),
                             call = rlang::caller_env()) {
-  if (!rlang::is_logical(null_ok, n = 1) || is.na(null_ok)) {
+  if (!rlang::is_logical(null_ok, n = 1) || rlang::is_na(null_ok)) {
     cli::cli_abort("{.arg null_ok} must be a single logical value")
   }
 

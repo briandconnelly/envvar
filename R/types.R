@@ -10,15 +10,17 @@
 #' envvar_set("MYNUMBER" = 12)
 #' envvar_get_integer("MYNUMBER") + 5
 envvar_get_integer <- function(x,
-                               default = NA_integer_,
-                               validate = NULL,
-                               use_default = TRUE) {
+                               default = NULL,
+                               validate = NULL) {
+  if (!rlang::is_null(default) && !rlang::is_scalar_integerish(default)) {
+    cli::cli_abort("{.arg default} value {.val {default}} should be integer-like.") # nolint: line_length_linter
+  }
+
   envvar_get(
     x,
     default = default,
     transform = as.integer,
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -33,15 +35,17 @@ envvar_get_integer <- function(x,
 #' envvar_set("MYNUMBER" = 12.34)
 #' envvar_get_numeric("MYNUMBER") + 5
 envvar_get_numeric <- function(x,
-                               default = NA_real_,
-                               validate = NULL,
-                               use_default = TRUE) {
+                               default = NULL,
+                               validate = NULL) {
+  if (!rlang::is_null(default) && !rlang::is_scalar_double(default)) {
+    cli::cli_abort("{.arg default} value {.val {default}} should be numeric.") # nolint: line_length_linter
+  }
+
   envvar_get(
     x,
     default = default,
     transform = as.numeric,
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -55,15 +59,17 @@ envvar_get_numeric <- function(x,
 #' # Check a logical value
 #' isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS"))
 envvar_get_logical <- function(x,
-                               default = NA,
-                               validate = NULL,
-                               use_default = TRUE) {
+                               default = NULL,
+                               validate = NULL) {
+  if (!rlang::is_null(default) && !rlang::is_scalar_logical(default)) {
+    cli::cli_abort("{.arg default} value {.val {default}} should be a logical value.") # nolint: line_length_linter
+  }
+
   envvar_get(
     x,
     default = default,
     transform = as.logical,
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -77,15 +83,17 @@ envvar_get_logical <- function(x,
 #' envvar_set("MY_VER" = "4.3.1")
 #' envvar_get_version("MY_VER", validate = \(x) x > as.numeric_version("4.3"))
 envvar_get_version <- function(x,
-                               default = NA,
-                               validate = NULL,
-                               use_default = TRUE) {
+                               default = NULL,
+                               validate = NULL) {
+  if (!rlang::is_null(default) && !is.numeric_version(default) && rlang::is_na(numeric_version(default, strict = FALSE))) { # nolint: line_length_linter
+    cli::cli_abort("{.arg default} value {.val {default}} should be a numeric version.") # nolint: line_length_linter
+  }
+
   envvar_get(
     x,
     default = default,
     transform = as.numeric_version,
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -97,9 +105,8 @@ envvar_get_version <- function(x,
 #'   `envvar_get_date()` or [lubridate::as_datetime] for `envvar_get_datetime()`
 #' @export
 envvar_get_date <- function(x,
-                            default = NA_character_,
+                            default = NULL,
                             validate = NULL,
-                            use_default = TRUE,
                             ...) {
   rlang::check_dots_used()
   envvar_get(
@@ -108,8 +115,7 @@ envvar_get_date <- function(x,
     transform = function(x) {
       lubridate::as_date(x, ...)
     },
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -121,9 +127,8 @@ envvar_get_date <- function(x,
 #'   `envvar_get_date()` or [lubridate::as_datetime] for `envvar_get_datetime()`
 #' @export
 envvar_get_datetime <- function(x,
-                                default = NA_character_,
+                                default = NULL,
                                 validate = NULL,
-                                use_default = TRUE,
                                 ...) {
   rlang::check_dots_used()
   envvar_get(
@@ -132,7 +137,6 @@ envvar_get_datetime <- function(x,
     transform = function(x) {
       lubridate::as_datetime(x, ...)
     },
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }

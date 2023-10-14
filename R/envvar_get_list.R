@@ -22,11 +22,11 @@
 #' envvar_get_psv("ROOMMATES")
 envvar_get_list <- function(x,
                             pattern = ":",
-                            default = NA,
+                            default = NULL,
                             validate = NULL,
-                            use_default = TRUE,
                             ...) {
   assert_scalar_string(pattern)
+  # TODO: validate `default`
   rlang::check_dots_used()
 
   envvar_get(
@@ -35,8 +35,7 @@ envvar_get_list <- function(x,
     transform = function(x) {
       strsplit(x, split = pattern, ...)[[1]]
     },
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -48,14 +47,12 @@ envvar_get_list <- function(x,
 #'
 envvar_get_csv <- function(x,
                            default = NA,
-                           validate = NULL,
-                           use_default = TRUE) {
+                           validate = NULL) {
   envvar_get_list(
     x,
     pattern = "\\s*,\\s*",
     default = default,
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
 
@@ -65,13 +62,11 @@ envvar_get_csv <- function(x,
 #'
 envvar_get_psv <- function(x,
                            default = NA,
-                           validate = NULL,
-                           use_default = TRUE) {
+                           validate = NULL) {
   envvar_get_list(
     x,
     pattern = "\\s*\\|\\s*",
     default = default,
-    validate = validate,
-    use_default = use_default
+    validate = validate
   )
 }
