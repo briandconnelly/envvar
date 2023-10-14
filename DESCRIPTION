@@ -7,6 +7,9 @@ Authors@R:
 Description: envvar makes it easy to set, check, retrieve, transform, and
     validate environment variables.
 License: MIT + file LICENSE
+URL: https://github.com/briandconnelly/envvar,
+    https://briandconnelly.github.io/envvar/
+BugReports: https://github.com/briandconnelly/envvar/issues
 Imports: 
     cli,
     fs,

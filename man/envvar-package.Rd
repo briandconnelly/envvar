@@ -8,6 +8,15 @@
 \description{
 envvar makes it easy to set, check, retrieve, transform, and validate environment variables.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/briandconnelly/envvar}
+  \item \url{https://briandconnelly.github.io/envvar/}
+  \item Report bugs at \url{https://github.com/briandconnelly/envvar/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Brian Connelly \email{bdc@bconnelly.net} (\href{https://orcid.org/0000-0002-9948-0379}{ORCID}) [copyright holder]
 
