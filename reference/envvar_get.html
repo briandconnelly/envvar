@@ -54,22 +54,9 @@ and ensures that it is within a defined set of potential values.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">envvar_get</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  default <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  validate <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  use_default <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">envvar_get</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, transform <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">envvar_get_oneof</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
-<span>  <span class="va">choices</span>,</span>
-<span>  default <span class="op">=</span> <span class="cn">NA_character_</span>,</span>
-<span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  validate <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  use_default <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">envvar_get_oneof</span><span class="op">(</span><span class="va">x</span>, <span class="va">choices</span>, default <span class="op">=</span> <span class="cn">NULL</span>, transform <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -91,12 +78,6 @@ variable's value</p></dd>
 <dd><p>Optional function that checks a value for validity</p></dd>
 
 
-<dt>use_default</dt>
-<dd><p>Logical value indicating whether the value specified by
-<code>default</code> should be used (<code>TRUE</code>, the default) or an error should be raised
-(<code>FALSE</code>)</p></dd>
-
-
 <dt>choices</dt>
 <dd><p>A list containing the potential values</p></dd>
 
@@ -111,8 +92,8 @@ unless a <code>transform</code> function has changed the object's type.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>envvar_get()</code> and the other type-specific variants follow this workflow:</p><ul><li><p>The value of the environment variable is retrieved. If that variable is
-not set, the value specified by <code>default</code> is used (or an error is raised if
-<code>use_default</code> is <code>FALSE</code>).</p></li>
+not set and <code>default</code> non-NULL, the default value is used. Otherwise an error
+is raised.</p></li>
 <li><p>Optionally, the value can be transformed by a function specified by the
 <code>transform</code> argument. Transformation functions return a scalar object.</p></li>
 <li><p>Optionally, the value can be validated by a function specified by the
