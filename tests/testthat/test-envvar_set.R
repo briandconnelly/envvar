@@ -1,5 +1,7 @@
 test_that("`envvar_set()` and `envvar_unset()` work as expected", {
   expect_error(envvar_set())
+  expect_snapshot(envvar_set(), error = TRUE)
+  expect_snapshot(envvar_set("TEST1" = "val1", "TEST2"), error = TRUE)
 
   expect_error(envvar_unset())
   expect_error(envvar_unset(""))

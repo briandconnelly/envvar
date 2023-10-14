@@ -11,6 +11,11 @@
 #' @examples
 #' envvar_set(DEBUG = 1)
 envvar_set <- function(...) {
+  args <- list(...)
+  if (!rlang::is_list(args) || !rlang::is_named(args) || length(args) < 1) {
+    cli::cli_abort("Arguments must be a name-value pair. For example, {.code envvar_set(\"MYVAR\" = \"value\")}.") # nolint: line_length_linter
+  }
+
   Sys.setenv(...)
 }
 
