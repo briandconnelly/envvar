@@ -29,10 +29,12 @@ unpleasant and time consuming.
 
 envvar takes a slightly opinionated perspective to make working with
 environment variables easier and more consistent. Unless a default value
-is explicitly given, `envvar_get()` raises an error. For example, let’s
-say our code depends on environment variable called `NUM_CPUS`. In base
-R, we have to first get the value using `Sys.getenv()` and then see
-whether the result is the empty string (not `NA` like you might expect):
+is explicitly given, `envvar_get()` raises an error.
+
+For example, let’s say our code depends on an environment variable
+called `NUM_CPUS`. In base R, we have to first get the value using
+`Sys.getenv()` and then see whether the result is the empty string (not
+`NA` like you might expect):
 
 ``` r
 num_cpus <- Sys.getenv("NUM_CPUS")
@@ -91,16 +93,16 @@ next example.
 
 envvar’s `envvar_get` functions can also apply validation logic. For
 this example, let’s set an environment variable called `LAUNCH_DATE`
-that absolutely, positively must be in the future. For now, let’s set it
-to a date in the past.
+that absolutely, positively must be in the future. Let’s first set it to
+a date in the past.
 
 ``` r
 envvar_set("LAUNCH_DATE" = "1969-07-16")
 ```
 
 To read `LAUNCH_DATE` and ensure that it is in the future, we can supply
-a function to `envvar_get_date()` that checks the value. If this
-function returns `FALSE`, an error is raised.
+a `validate` function to `envvar_get_date()` that checks the value. If
+this function returns `FALSE`, an error is raised.
 
 ``` r
 envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
@@ -117,9 +119,9 @@ envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
 #> [1] "2028-08-28"
 ```
 
-Note that the `validate` argument only supports one function. If you’re
-in need of complex validation, just use a function that encapsulates all
-of that fanciness.
+Note that the `validate` argument supports one function. If you’re in
+need of complex validation, just use a function that encapsulates all of
+that fanciness.
 
 ## Installation
 
