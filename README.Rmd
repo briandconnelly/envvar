@@ -109,6 +109,9 @@ envvar_set("LAUNCH_DATE" = "2028-08-28")
 envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
 ```
 
+Note that the `validate` argument only supports one function.
+If you're in need of complex validation, just use a function that encapsulates all of that fanciness.
+
 
 ## Installation
 

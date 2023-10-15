@@ -117,6 +117,10 @@ envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
 #> [1] "2028-08-28"
 ```
 
+Note that the `validate` argument only supports one function. If you’re
+in need of complex validation, just use a function that encapsulates all
+of that fanciness.
+
 ## Installation
 
 envvar is still changing quickly, so it’s not quite ready for CRAN. If
