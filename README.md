@@ -72,9 +72,6 @@ immediately treat it like the integer that it is.
 ``` r
 Sys.getenv("NUM_CPUS") / 2
 #> Error in Sys.getenv("NUM_CPUS")/2: non-numeric argument to binary operator
-
-num_cpus / 2
-#> Error in num_cpus/2: non-numeric argument to binary operator
 ```
 
 envvar includes several helper functions that return commonly-used data

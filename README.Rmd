@@ -72,8 +72,6 @@ Because `Sys.getenv()` returns strings, we can't immediately treat it like the i
 
 ```{r base nocoerce,error=TRUE}
 Sys.getenv("NUM_CPUS") / 2
-
-num_cpus / 2
 ```
 
 envvar includes several helper functions that return commonly-used data types as their proper type.
