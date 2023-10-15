@@ -86,8 +86,9 @@ envvar::envvar_get_integer("NUM_CPUS") / 2
 #> [1] 4
 ```
 
-envvar can handle numbers, logical values, version numbers, URLs, dates,
-timestamps, UUIDs, IP addresses, and more.
+envvar can handle numbers, logical values, version numbers, URLs,
+timestamps, UUIDs, IP addresses, and more. We’ll work with dates in the
+next example.
 
 ## Validation
 
