@@ -91,10 +91,7 @@
 <p>Let’s say our <code>NUM_CPUS</code> environment variable is set. For this example, it’s set to 8. Because <code><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv()</a></code> returns strings, we can’t immediately treat it like the integer that it is.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
-<span><span class="co">#&gt; Error in Sys.getenv("NUM_CPUS")/2: non-numeric argument to binary operator</span></span>
-<span></span>
-<span><span class="va">num_cpus</span> <span class="op">/</span> <span class="fl">2</span></span>
-<span><span class="co">#&gt; Error in num_cpus/2: non-numeric argument to binary operator</span></span></code></pre></div>
+<span><span class="co">#&gt; Error in Sys.getenv("NUM_CPUS")/2: non-numeric argument to binary operator</span></span></code></pre></div>
 <p>envvar includes several helper functions that return commonly-used data types as their proper type. Here, we’ll use <code><a href="reference/types.html">envvar_get_integer()</a></code> to get <code>NUM_CPUS</code> and return it as an integer.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">envvar</span><span class="fu">::</span><span class="fu"><a href="reference/types.html">envvar_get_integer</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
