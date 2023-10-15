@@ -65,9 +65,9 @@ envvar_get("NUM_CPUS", default = 12)
 
 ## Speaking Native Types
 
-Let’s say our `NUM_CPUS` environment variable is set. For this example,
-it’s set to 8. Because `Sys.getenv()` returns strings, we can’t
-immediately treat it like the integer that it is.
+Let’s say our `NUM_CPUS` environment variable is set to 8. Because
+`Sys.getenv()` returns strings, we can’t immediately treat it like the
+integer that it is.
 
 ``` r
 Sys.getenv("NUM_CPUS") / 2
