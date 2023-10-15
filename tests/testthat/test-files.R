@@ -207,6 +207,8 @@ test_that("validate_file() `check_readable` and `check_writeable()` args works a
       check_writable = TRUE
     )
   )
+
+  fs::file_delete(tempfile)
 })
 
 
@@ -298,6 +300,8 @@ test_that("validate_dir() `create` arg works as expected", {
       check_writable = FALSE
     )
   )
+
+  fs::dir_delete(tempdir)
 })
 
 test_that("envvar_get_dir() works as expected", {
@@ -306,3 +310,5 @@ test_that("envvar_get_dir() works as expected", {
     tempdir_exists
   )
 })
+
+fs::file_delete(tempfile_exists)

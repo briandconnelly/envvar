@@ -14,76 +14,127 @@ status](https://www.r-pkg.org/badges/version/envvar)](https://CRAN.R-project.org
 coverage](https://codecov.io/gh/briandconnelly/envvar/branch/main/graph/badge.svg)](https://app.codecov.io/gh/briandconnelly/envvar?branch=main)
 <!-- badges: end -->
 
-Environment variables are a common way to alter how your code behaves
-depending on context. They’re represented by name-value pairs, and the
-value is always a string. Because of this, most code that uses
-environment variables must validate those values to make sure they’re
-reasonable and then transform them into a more usable type.
+Environment variables are a powerful tool that enable your code to react
+to its environment. However, two common design choices are a frequent
+source of friction. First, unlike most other “getter”-type functions,
+functions that retrieve values from environment variable typically fail
+silently. Because of this, additional code to check whether the
+environment variable was set are needed. Second, values are almost
+always returned as strings. This is understandable, but programmers
+often use environment variables to store a wide variety of data types
+from numbers to timestamps to URLs. In this case, additional code is
+required to coerce those strings into their intended format. For
+frequent users of environment variables, writing all this extra code is
+unpleasant and time consuming.
 
-envvar makes working with environment variables easier and more
-consistent. It enables you to transform and validate values, making them
-immediately usable in your code. Aside from allowing you to define your
-own transformation and validation functions, envvar comes with its own
-set of helper functions that handle common data types such as integers,
-lists, URLs, IP addresses, and more.
+envvar takes a slightly opinionated perspective to make working with
+environment variables easier and more consistent. Unless a default value
+is explicitly given, `envvar_get()` raises an error. For example, let’s
+say our code depends on environment variable called `NUM_CPUS`. In base
+R, we have to first get the value using `Sys.getenv()` and then see
+whether the result is the empty string (not `NA` like you might expect):
 
-For example, pretend we’re using an environment variable called
-`IMPORTANT_SERVER` to store the URL of an important server. We can use
-envvar’s `envvar_get_url()` function to receive its value and convert it
-into an \[httr2\] `url` object:
+``` r
+num_cpus <- Sys.getenv("NUM_CPUS")
+
+if (identical(num_cpus, "")) {
+  stop("I need `NUM_CPUS` to be set!")
+}
+#> Error in eval(expr, envir, enclos): I need `NUM_CPUS` to be set!
+```
+
+envvar’s `envvar_get()` will just fail if `NUM_CPUS` isn’t set:
 
 ``` r
 library(envvar)
 
-envvar_set("IMPORTANT_SERVER" = "https://192.168.1.12")
+envvar_get("NUM_CPUS")
+#> Error in `envvar_get()`:
+#> ! Environment variable `NUM_CPUS` is not set.
 ```
 
-``` r
-library(envvar)
+If a reasonable default is known, it can be supplied via the `default`
+argument:
 
-prod_server_url <- envvar_get_url("IMPORTANT_SERVER")
-prod_server_url
-#> <httr2_url> https://192.168.1.12
-#> • scheme: https
-#> • hostname: 192.168.1.12
+``` r
+envvar_get("NUM_CPUS", default = 12)
+#> ℹ Environment variable `NUM_CPUS` is not set. Using default value 12.
+#> [1] 12
 ```
 
-Just to be safe, we can set a default value in case someone forgot to
-set the value:
+## Speaking Native Types
+
+Let’s say our `NUM_CPUS` environment variable is set. For this example,
+it’s set to 8. Because `Sys.getenv()` returns strings, we can’t
+immediately treat it like the integer that it is.
 
 ``` r
-envvar_unset("IMPORTANT_SERVER")
+Sys.getenv("NUM_CPUS") / 2
+#> Error in Sys.getenv("NUM_CPUS")/2: non-numeric argument to binary operator
 
-prod_server_url <- envvar_get_url("IMPORTANT_SERVER", default = "https://my_important_server.biz")
-#> ℹ Environment variable `IMPORTANT_SERVER` is not set. Using default value "https://my_important_server.biz".
-prod_server_url
-#> <httr2_url> https://my_important_server.biz
-#> • scheme: https
-#> • hostname: my_important_server.biz
+num_cpus / 2
+#> Error in num_cpus/2: non-numeric argument to binary operator
 ```
 
-We can also add a validation check to ensure it’s using https:
+envvar includes several helper functions that return commonly-used data
+types as their proper type. Here, we’ll use `envvar_get_integer()` to
+get `NUM_CPUS` and return it as an integer.
 
 ``` r
-envvar_set("IMPORTANT_SERVER" = "https://192.168.1.12")
+envvar::envvar_get_integer("NUM_CPUS") / 2
+#> [1] 4
+```
 
-prod_server_url <- envvar_get_url(
-  "IMPORTANT_SERVER",
-  default = "https://my_important_server.biz",
-  validate = \(x) x$scheme == "https"
-)
-prod_server_url
-#> <httr2_url> https://192.168.1.12
-#> • scheme: https
-#> • hostname: 192.168.1.12
+envvar can handle numbers, logical values, version numbers, URLs, dates,
+timestamps, UUIDs, IP addresses, and more.
+
+## Validation
+
+envvar’s `envvar_get` functions can also apply validation logic. For
+this example, let’s set an environment variable called `LAUNCH_DATE`
+that absolutely must be in the future. For now, let’s set it to a date
+in the past.
+
+``` r
+envvar_set("LAUNCH_DATE" = "1969-07-16")
+```
+
+To read `LAUNCH_DATE` and ensure that it is in the future, we can supply
+a function to `envvar_get_date()` that checks the value. If this
+function returns `FALSE`, an error is raised.
+
+``` r
+envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
+#> Error in `envvar_get()`:
+#> ! "1969-07-16" is not a valid value for `LAUNCH_DATE`
+```
+
+Let’s try that again:
+
+``` r
+envvar_set("LAUNCH_DATE" = "2028-08-28")
+
+envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
+#> [1] "2028-08-28"
 ```
 
 ## Installation
 
-If you’d like to try out the development version of envvar, you can
-install directly from GitHub:
+envvar is still changing quickly, so it’s not quite ready for CRAN. If
+you’d like to try out the development version, you can install directly
+from GitHub:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("briandconnelly/envvar")
 ```
+
+## Related Packages
+
+- [dotenv](https://github.com/gaborcsardi/dotenv) package for loading
+  environment variables from `.env` files
+- [config](https://rstudio.github.io/config/) package for defining and
+  using multiple environments
+- [options](https://dgkf.github.io/options/) package for defining and
+  using R package options, another way of adding flexibility to your
+  code

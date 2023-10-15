@@ -61,9 +61,12 @@ envvar_set("MYNUMBER" = 12.34)
 envvar_get_numeric("MYNUMBER") + 5
 
 # Check a logical value
-isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS"))
+isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS", default = FALSE))
 
 # Get an IP address value and ensure that it is IPv4
 envvar_set("MY_VER" = "4.3.1")
 envvar_get_version("MY_VER", validate = \(x) x > as.numeric_version("4.3"))
+# Get a date and make sure it's in the future
+envvar_set("LAUNCH_DATE" = "2024-08-08")
+envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
 }

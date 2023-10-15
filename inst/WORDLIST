@@ -4,8 +4,10 @@ Lifecycle
 ORCID
 UUID
 UUIDs
+config
+dotenv
 envvar's
 envvar’s
-https
+getter
 httr
 unsets

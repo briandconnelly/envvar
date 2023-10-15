@@ -57,7 +57,7 @@ envvar_get_numeric <- function(x,
 #' @examples
 #'
 #' # Check a logical value
-#' isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS"))
+#' isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS", default = FALSE))
 envvar_get_logical <- function(x,
                                default = NULL,
                                validate = NULL) {
@@ -104,6 +104,10 @@ envvar_get_version <- function(x,
 #' @param ... Additional arguments passed to [lubridate::as_date] for
 #'   `envvar_get_date()` or [lubridate::as_datetime] for `envvar_get_datetime()`
 #' @export
+#' @examples
+#' # Get a date and make sure it's in the future
+#' envvar_set("LAUNCH_DATE" = "2024-08-08")
+#' envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
 envvar_get_date <- function(x,
                             default = NULL,
                             validate = NULL,
