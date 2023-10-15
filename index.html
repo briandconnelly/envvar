@@ -104,7 +104,7 @@
 <div class="section level2">
 <h2 id="validation">Validation<a class="anchor" aria-label="anchor" href="#validation"></a>
 </h2>
-<p>envvar’s <code>envvar_get</code> functions can also apply validation logic. For this example, let’s set an environment variable called <code>LAUNCH_DATE</code> that absolutely must be in the future. For now, let’s set it to a date in the past.</p>
+<p>envvar’s <code>envvar_get</code> functions can also apply validation logic. For this example, let’s set an environment variable called <code>LAUNCH_DATE</code> that absolutely, positively must be in the future. For now, let’s set it to a date in the past.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/envvar_set.html">envvar_set</a></span><span class="op">(</span><span class="st">"LAUNCH_DATE"</span> <span class="op">=</span> <span class="st">"1969-07-16"</span><span class="op">)</span></span></code></pre></div>
 <p>To read <code>LAUNCH_DATE</code> and ensure that it is in the future, we can supply a function to <code><a href="reference/types.html">envvar_get_date()</a></code> that checks the value. If this function returns <code>FALSE</code>, an error is raised.</p>
