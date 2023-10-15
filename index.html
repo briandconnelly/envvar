@@ -65,6 +65,9 @@
 <!-- badges: start -->
 
 <p>Environment variables are a powerful tool that enable your code to react to its environment. However, two common design choices are a frequent source of friction. First, unlike most other “getter”-type functions, functions that retrieve values from environment variable typically fail silently. Because of this, additional code to check whether the environment variable was set are needed. Second, values are almost always returned as strings. This is understandable, but programmers often use environment variables to store a wide variety of data types from numbers to timestamps to URLs. In this case, additional code is required to coerce those strings into their intended format. For frequent users of environment variables, writing all this extra code is unpleasant and time consuming.</p>
+<div class="section level2">
+<h2 id="failing-loudly">Failing Loudly<a class="anchor" aria-label="anchor" href="#failing-loudly"></a>
+</h2>
 <p>envvar takes a slightly opinionated perspective to make working with environment variables easier and more consistent. Unless a default value is explicitly given, <code><a href="reference/envvar_get.html">envvar_get()</a></code> raises an error.</p>
 <p>For example, let’s say our code depends on an environment variable called <code>NUM_CPUS</code>. In base R, we have to first get the value using <code><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv()</a></code> and then see whether the result is the empty string (not <code>NA</code> like you might expect):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -86,6 +89,7 @@
 <code class="sourceCode R"><span><span class="fu"><a href="reference/envvar_get.html">envvar_get</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span>, default <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Environment variable `NUM_CPUS` is not set. Using default value 12.</span></span>
 <span><span class="co">#&gt; [1] 12</span></span></code></pre></div>
+</div>
 <div class="section level2">
 <h2 id="speaking-native-types">Speaking Native Types<a class="anchor" aria-label="anchor" href="#speaking-native-types"></a>
 </h2>
