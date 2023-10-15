@@ -94,8 +94,8 @@ next example.
 
 envvar’s `envvar_get` functions can also apply validation logic. For
 this example, let’s set an environment variable called `LAUNCH_DATE`
-that absolutely must be in the future. For now, let’s set it to a date
-in the past.
+that absolutely, positively must be in the future. For now, let’s set it
+to a date in the past.
 
 ``` r
 envvar_set("LAUNCH_DATE" = "1969-07-16")

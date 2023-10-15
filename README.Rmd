@@ -90,7 +90,7 @@ We'll work with dates in the next example.
 ## Validation
 
 envvar's `envvar_get` functions can also apply validation logic.
-For this example, let's set an environment variable called `LAUNCH_DATE` that absolutely must be in the future.
+For this example, let's set an environment variable called `LAUNCH_DATE` that absolutely, positively must be in the future.
 For now, let's set it to a date in the past.
 
 ```{r set launch date past}
