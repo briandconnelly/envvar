@@ -27,6 +27,8 @@ required to coerce those strings into their intended format. For
 frequent users of environment variables, writing all this extra code is
 unpleasant and time consuming.
 
+## Failing Loudly
+
 envvar takes a slightly opinionated perspective to make working with
 environment variables easier and more consistent. Unless a default value
 is explicitly given, `envvar_get()` raises an error.
