@@ -54,7 +54,8 @@ envvar_get("NUM_CPUS")
 ```
 
 If a reasonable default is known, it can be supplied via the `default`
-argument:
+argument. envvar prints a message, though, so you know that it’s using a
+default rather than a value specified in the environment.
 
 ``` r
 envvar_get("NUM_CPUS", default = 12)
