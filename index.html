@@ -80,7 +80,7 @@
 <span><span class="fu"><a href="reference/envvar_get.html">envvar_get</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in `envvar_get()`:</span></span>
 <span><span class="co">#&gt; ! Environment variable `NUM_CPUS` is not set.</span></span></code></pre></div>
-<p>If a reasonable default is known, it can be supplied via the <code>default</code> argument:</p>
+<p>If a reasonable default is known, it can be supplied via the <code>default</code> argument. envvar prints a message, though, so you know that it’s using a default rather than a value specified in the environment.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/envvar_get.html">envvar_get</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span>, default <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span>
 <span><span class="co">#&gt; ℹ Environment variable `NUM_CPUS` is not set. Using default value 12.</span></span>
@@ -99,7 +99,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">envvar</span><span class="fu">::</span><span class="fu"><a href="reference/types.html">envvar_get_integer</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
-<p>envvar can handle numbers, logical values, version numbers, URLs, dates, timestamps, UUIDs, IP addresses, and more.</p>
+<p>envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more. We’ll work with dates in the next example.</p>
 </div>
 <div class="section level2">
 <h2 id="validation">Validation<a class="anchor" aria-label="anchor" href="#validation"></a>
