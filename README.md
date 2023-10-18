@@ -83,13 +83,14 @@ types as their proper type. Here, we’ll use `envvar_get_integer()` to
 get `NUM_CPUS` and return it as an integer.
 
 ``` r
-envvar::envvar_get_integer("NUM_CPUS") / 2
+envvar_get_integer("NUM_CPUS") / 2
 #> [1] 4
 ```
 
 envvar can handle numbers, logical values, version numbers, URLs,
-timestamps, UUIDs, IP addresses, and more. We’ll work with dates in the
-next example.
+timestamps, UUIDs, IP addresses, and more. You can add support for
+additional data types using `envvar_get()`’s `transform` argument. We’ll
+work with dates in the next example.
 
 ## Validation
 
