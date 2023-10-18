@@ -99,9 +99,9 @@
 <span><span class="co">#&gt; Error in Sys.getenv("NUM_CPUS")/2: non-numeric argument to binary operator</span></span></code></pre></div>
 <p>envvar includes several helper functions that return commonly-used data types as their proper type. Here, we’ll use <code><a href="reference/types.html">envvar_get_integer()</a></code> to get <code>NUM_CPUS</code> and return it as an integer.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">envvar</span><span class="fu">::</span><span class="fu"><a href="reference/types.html">envvar_get_integer</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/types.html">envvar_get_integer</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
-<p>envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more. We’ll work with dates in the next example.</p>
+<p>envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more. You can add support for additional data types using <code><a href="reference/envvar_get.html">envvar_get()</a></code>’s <code>transform</code> argument. We’ll work with dates in the next example.</p>
 </div>
 <div class="section level2">
 <h2 id="validation">Validation<a class="anchor" aria-label="anchor" href="#validation"></a>
