@@ -84,7 +84,7 @@ envvar_get_integer("NUM_CPUS") / 2
 ```
 
 envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more.
-You can add support for additional data types using `envvar_get()`'s `transform` argument.
+You can add support for additional data types using the `transform` argument to `envvar_get()`.
 We'll work with dates in the next example.
 
 
