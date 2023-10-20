@@ -42,7 +42,7 @@ envvar_get_ipaddress <- function(x,
     transform = function(x) {
       ip <- suppressWarnings(ipaddress::as_ip_address(x))
       if (is.na(ip)) {
-        cli::cli_warn("{.val {x}} is not a valid IP address")
+        cli::cli_abort("{.val {x}} is not a valid IP address")
       }
       ip
     },

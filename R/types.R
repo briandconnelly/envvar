@@ -21,8 +21,7 @@ envvar_get_integer <- function(x,
     default = default,
     transform = function(x) {
       if (!rlang::is_integerish(suppressWarnings(as.numeric(x)), finite = TRUE)) { # nolint: line_length_linter
-        cli::cli_warn("{.val {x}} is not an integer-like value")
-        NA_integer_
+        cli::cli_abort("{.val {x}} is not an integer-like value")
       } else {
         as.integer(x)
       }
@@ -54,7 +53,7 @@ envvar_get_numeric <- function(x,
     transform = function(x) {
       val <- suppressWarnings(as.numeric(x))
       if (rlang::is_na(val)) {
-        cli::cli_warn("{.val {x}} is not a numeric value")
+        cli::cli_abort("{.val {x}} is not a numeric value")
         NA_real_
       } else {
         val
@@ -86,13 +85,11 @@ envvar_get_logical <- function(x,
     transform = function(x) {
       x <- toupper(x)
       if (!is.na(as.logical(x))) {
-        cli::cli_alert_info("Got a thing {.val {x}}")
         as.logical(x)
       } else if (x %in% c("0", "1")) {
-        cli::cli_alert_info("Got a 0/1")
         as.logical(as.integer(x))
       } else {
-        cli::cli_warn("{.val {x}} is not a logical value")
+        cli::cli_abort("{.val {x}} is not a logical value")
         NA
       }
     },

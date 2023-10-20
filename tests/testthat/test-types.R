@@ -42,9 +42,9 @@ test_that("`envvar_get_integer()` warnings for non-integerish things", {
       "TEST_DBL" = 1.23
     )
   )
-  # Invalid values produce a warning and return NA
-  expect_warning(envvar_get_integer("TEST_DBL"))
-  expect_true(is.na(suppressWarnings(envvar_get_integer("TEST_DBL"))))
+  # Invalid values produce an error
+  expect_error(envvar_get_integer("TEST_DBL"))
+  expect_snapshot(envvar_get_integer("TEST_DBL"), error = TRUE)
 })
 
 
@@ -125,8 +125,8 @@ test_that("`envvar_get_logical()` works as expected", {
     )
   )
 
-  expect_warning(envvar_get_logical("TEST_LOGICAL_BAD"))
-  expect_true(is.na(suppressWarnings(envvar_get_logical("TEST_LOGICAL_BAD"))))
+  expect_error(envvar_get_logical("TEST_LOGICAL_BAD"))
+  expect_snapshot(envvar_get_logical("TEST_LOGICAL_BAD"), error = TRUE)
 })
 
 
