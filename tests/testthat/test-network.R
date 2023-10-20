@@ -19,6 +19,7 @@ test_that("envvar_get_ipaddress() works as expected with invalid IPv4", {
   test_ipv4 <- "256.256.1.4"
   withr::local_envvar(list("TEST_IPV4" = test_ipv4))
 
+  # Error is raised when an invalid IP address is given
   expect_warning(envvar_get_ipaddress("TEST_IPV4"))
 
   # {ipaddress} still returns an ip_address object with value NA
@@ -34,6 +35,7 @@ test_that("envvar_get_ipaddress() works as expected with invalid IPv6", {
   test_ipv6 <- "not even close to valid"
   withr::local_envvar(list("TEST_IPV6" = test_ipv6))
 
+  # Warning is given when an invalid IP address is given
   expect_warning(envvar_get_ipaddress("TEST_IPV6"))
 
   # {ipaddress} still returns an ip_address object with value NA

@@ -3,6 +3,7 @@ test_that("`envvar_get_integer()` works as expected", {
     list(
       "ENVVAR_TEST_INT1" = 14,
       "ENVVAR_TEST_INT2" = -36,
+      "ENVVAR_TEST_DBL" = 1.234,
       "ENVVAR_TEST_INT_NOTSET" = NA
     )
   )
@@ -33,6 +34,17 @@ test_that("`envvar_get_integer()` works as expected", {
       validate = \(x) x < 100
     )
   )
+})
+
+test_that("`envvar_get_integer()` warnings for non-integerish things", {
+  withr::local_envvar(
+    list(
+      "TEST_DBL" = 1.23
+    )
+  )
+  # Invalid values produce a warning and return NA
+  expect_warning(envvar_get_integer("TEST_DBL"))
+  expect_true(is.na(suppressWarnings(envvar_get_integer("TEST_DBL"))))
 })
 
 
@@ -74,6 +86,9 @@ test_that("`envvar_get_logical()` works as expected", {
     list(
       "TEST_LOGICAL1" = TRUE,
       "TEST_LOGICAL2" = FALSE,
+      "TEST_LOGICAL3" = 0,
+      "TEST_LOGICAL4" = "True",
+      "TEST_LOGICAL_BAD" = "yep",
       "TEST_NOTSET" = NA
     )
   )
@@ -81,6 +96,8 @@ test_that("`envvar_get_logical()` works as expected", {
   expect_true(rlang::is_logical(envvar_get_logical("TEST_LOGICAL1")))
   expect_true(envvar_get_logical("TEST_LOGICAL1"))
   expect_false(envvar_get_logical("TEST_LOGICAL2"))
+  expect_false(envvar_get_logical("TEST_LOGICAL3"))
+  expect_true(envvar_get_logical("TEST_LOGICAL4"))
 
   expect_error(envvar_get_logical("TEST_NOTSET"))
   expect_error(envvar_get_logical("TEST_LOGICAL1", default = 123.4))
@@ -107,6 +124,9 @@ test_that("`envvar_get_logical()` works as expected", {
       validate = is.logical
     )
   )
+
+  expect_warning(envvar_get_logical("TEST_LOGICAL_BAD"))
+  expect_true(is.na(suppressWarnings(envvar_get_logical("TEST_LOGICAL_BAD"))))
 })
 
 
