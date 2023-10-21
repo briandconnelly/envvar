@@ -4,14 +4,19 @@ template:
 
 reference:
   - title: Getting Environment Variables
+    desc: "Functions for getting environment variables"
     contents:
       - envvar_get
       - starts_with("envvar_get_")
   - title: Setting Environment Variables
+    desc: "Functions for setting and unsetting environment variables"
     contents:
       - envvar_set
       - envvar_unset
   - title: Checking Environment Variables
+    desc: >
+      Functions for listing the environment variables currently set and checking
+      their status
     contents:
       - envvar_list
       - envvar_is_set
