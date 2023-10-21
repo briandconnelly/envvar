@@ -31,6 +31,9 @@ envvar_get_datetime(x, default = NULL, validate = NULL, ...)
 \item{...}{Additional arguments passed to \link[lubridate:as_date]{lubridate::as_date} for
 \code{envvar_get_date()} or \link[lubridate:as_date]{lubridate::as_datetime} for \code{envvar_get_datetime()}}
 }
+\value{
+A scalar object
+}
 \description{
 \code{envvar_get_integer()} reads environment variables with integer
 values (e.g., \code{15}, \code{0}, \code{-1})

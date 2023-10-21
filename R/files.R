@@ -1,7 +1,8 @@
 #' @rdname files
 #' @title Environment variables for files and directories
 
-#' @description `envvar_get_file` gets a file name from an environment variable
+#' @description `envvar_get_file()` gets a file name from an environment
+#'   variable
 #' @inheritParams envvar_get
 #' @param create Create the file or directory if it does not exist (default:
 #'   `TRUE`)
@@ -9,6 +10,7 @@
 #' @param check_writable Ensure that the file or directory is writable
 #' @param ... Additional arguments passed to [fs::file_create] for
 #'   `envvar_get_file()` or [fs::dir_create] for `envvar_get_dir()`
+#' @return A string containing the path to a file or directory
 #' @export
 #' @examples
 #'
@@ -68,7 +70,7 @@ validate_file <- function(x,
 
 
 #' @rdname files
-#' @description `envvar_get_dir` gets a directory name from an environment
+#' @description `envvar_get_dir()` gets a directory name from an environment
 #'   variable
 #' @inheritParams envvar
 #' @export

@@ -1,8 +1,9 @@
 #' @rdname uuid
 #' @title Environment variables for UUIDs
 
-#' @description `envvar_get_uuid` gets a UUID from an environment variable
+#' @description `envvar_get_uuid()` gets a UUID from an environment variable
 #' @inheritParams envvar_get
+#' @return An object of the class `"UUID"` representing a vector of UUIDs.
 #' @export
 #' @examples
 #'

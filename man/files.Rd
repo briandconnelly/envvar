@@ -39,10 +39,14 @@ variable's value}
 \item{...}{Additional arguments passed to \link[fs:create]{fs::file_create} for
 \code{envvar_get_file()} or \link[fs:create]{fs::dir_create} for \code{envvar_get_dir()}}
 }
+\value{
+A string containing the path to a file or directory
+}
 \description{
-\code{envvar_get_file} gets a file name from an environment variable
+\code{envvar_get_file()} gets a file name from an environment
+variable
 
-\code{envvar_get_dir} gets a directory name from an environment
+\code{envvar_get_dir()} gets a directory name from an environment
 variable
 }
 \examples{

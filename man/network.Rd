@@ -16,11 +16,18 @@ envvar_get_ipaddress(x, default = NULL, validate = NULL)
 
 \item{validate}{Optional function that checks a value for validity}
 }
+\value{
+\code{envvar_get_url()} returns a URL: an S3 list with class \code{httr2_url}
+and elements \code{scheme}, \code{hostname}, \code{port}, \code{path}, \code{fragment}, \code{query},
+\code{username}, \code{password}, where applicable.
+
+\code{envvar_get_ipaddress()} returns an \code{ip_address} vector
+}
 \description{
-\code{envvar_get_url} gets a URL value from an environment
+\code{envvar_get_url()} gets a URL value from an environment
 variable and parses it with \link[httr2:url_parse]{httr2::url_parse}.
 
-\code{envvar_get_ipaddress} gets an IP address value from an
+\code{envvar_get_ipaddress()} gets an IP address value from an
 environment variable
 }
 \examples{
