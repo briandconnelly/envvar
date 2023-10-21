@@ -64,11 +64,11 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>Environment variables are a powerful tool that enable your code to react to its environment. However, two common design choices are a frequent source of friction. First, unlike most other “getter”-type functions, functions that retrieve values from environment variable typically fail silently. Because of this, additional code to check whether the environment variable was set are needed. Second, values are almost always returned as strings. This is understandable, but programmers often use environment variables to store a wide variety of data types from numbers to timestamps to URLs. In this case, additional code is required to coerce those strings into their intended format. For frequent users of environment variables, writing all this extra code is unpleasant and time consuming.</p>
+<p>Environment variables are a powerful tool that enable your code to react to its environment. However, two common design choices are a frequent source of friction. First, unlike most other “getter”-type functions, those functions that retrieve values from environment variable typically fail silently. Second, while programmers often use environment variables to store a wide variety of data types from numbers to timestamps to URLs, values are almost always returned as strings. These choices necessitate additional code that checks whether an environment variable was actually set and to coerce its value into the intended format. For frequent users of environment variables, writing all this extra code is unpleasant and time consuming.</p>
 <div class="section level2">
 <h2 id="failing-loudly">Failing Loudly<a class="anchor" aria-label="anchor" href="#failing-loudly"></a>
 </h2>
-<p>envvar takes a slightly opinionated perspective to make working with environment variables easier and more consistent. Unless a default value is explicitly given, <code><a href="reference/envvar_get.html">envvar_get()</a></code> raises an error.</p>
+<p>envvar takes a slightly opinionated perspective to make working with environment variables easier and more consistent. Unless a default value is explicitly given, <code><a href="reference/envvar_get.html">envvar_get()</a></code> raises an error if an environment variable is not defined.</p>
 <p>For example, let’s say our code depends on an environment variable called <code>NUM_CPUS</code>. In base R, we have to first get the value using <code><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv()</a></code> and then see whether the result is the empty string (not <code>NA</code> like you might expect):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">num_cpus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span></span>
@@ -101,21 +101,38 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/types.html">envvar_get_integer</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
 <span><span class="co">#&gt; [1] 4</span></span></code></pre></div>
-<p>envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more. You can add support for additional data types using the <code>transform</code> argument to <code><a href="reference/envvar_get.html">envvar_get()</a></code>. We’ll work with dates in the next example.</p>
+<p>Returning to the theme of failing loudly, envvar’s type-specific functions will also fail if a value cannot be coerced to the expected type. For example, using <code><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv()</a></code> and <code>as.integer</code> to load what <em>should be</em> an integer value might not produce what you’d expect.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Sys.setenv.html" class="external-link">Sys.setenv</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span> <span class="op">=</span> <span class="fl">12.345</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">num_cpus</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">num_cpus</span></span>
+<span><span class="co">#&gt; [1] 12</span></span></code></pre></div>
+<p>Using <code><a href="reference/types.html">envvar_get_integer()</a></code>:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/types.html">envvar_get_integer</a></span><span class="op">(</span><span class="st">"NUM_CPUS"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `transform()`:</span></span>
+<span><span class="co">#&gt; ! "12.345" is not an integer-like value</span></span></code></pre></div>
+<p>This extends to default values:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/types.html">envvar_get_integer</a></span><span class="op">(</span><span class="st">"SOME_UNSET_INTEGER"</span>, default <span class="op">=</span> <span class="fl">12.345</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `envvar_get_integer()`:</span></span>
+<span><span class="co">#&gt; ! `default` value 12.345 should be integer-like.</span></span></code></pre></div>
+<p>envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more. We’ll work with dates in the next example.</p>
 </div>
 <div class="section level2">
 <h2 id="validation">Validation<a class="anchor" aria-label="anchor" href="#validation"></a>
 </h2>
-<p>envvar’s <code>envvar_get</code> functions can also apply validation logic. For this example, let’s set an environment variable called <code>LAUNCH_DATE</code> that absolutely, positively must be in the future. Let’s first set it to a date in the past.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>Sometimes being the right type isn’t enough. envvar’s <code>envvar_get</code> functions can also apply validation logic. For this example, let’s set an environment variable called <code>LAUNCH_DATE</code> that stores a date that absolutely, positively must be in the future. Let’s first set it to a date in the past.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/envvar_set.html">envvar_set</a></span><span class="op">(</span><span class="st">"LAUNCH_DATE"</span> <span class="op">=</span> <span class="st">"1969-07-16"</span><span class="op">)</span></span></code></pre></div>
 <p>To read <code>LAUNCH_DATE</code> and ensure that it is in the future, we can supply a <code>validate</code> function to <code><a href="reference/types.html">envvar_get_date()</a></code> that checks the value. If this function returns <code>FALSE</code>, an error is raised.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/types.html">envvar_get_date</a></span><span class="op">(</span><span class="st">"LAUNCH_DATE"</span>, validate <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in `envvar_get()`:</span></span>
 <span><span class="co">#&gt; ! "1969-07-16" is not a valid value for `LAUNCH_DATE`</span></span></code></pre></div>
 <p>Let’s try that again:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/envvar_set.html">envvar_set</a></span><span class="op">(</span><span class="st">"LAUNCH_DATE"</span> <span class="op">=</span> <span class="st">"2028-08-28"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/types.html">envvar_get_date</a></span><span class="op">(</span><span class="st">"LAUNCH_DATE"</span>, validate <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
@@ -125,8 +142,11 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>envvar is still changing quickly, so it’s not quite ready for CRAN. If you’d like to try out the development version, you can install directly from GitHub:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>You can install the latest released version of envvar by running:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"envvar"</span><span class="op">)</span></span></code></pre></div>
+<p>If you’d like to try out the development version, you can install directly from GitHub:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"briandconnelly/envvar"</span><span class="op">)</span></span></code></pre></div>
 </div>
