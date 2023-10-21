@@ -157,9 +157,14 @@ that fanciness.
 
 ## Installation
 
-envvar is still changing quickly, so it’s not quite ready for CRAN. If
-you’d like to try out the development version, you can install directly
-from GitHub:
+You can install the latest released version of envvar by running:
+
+``` r
+install.packages("envvar")
+```
+
+If you’d like to try out the development version, you can install
+directly from GitHub:
 
 ``` r
 # install.packages("remotes")

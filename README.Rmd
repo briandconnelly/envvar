@@ -139,7 +139,12 @@ If you're in need of complex validation, just use a function that encapsulates a
 
 ## Installation
 
-envvar is still changing quickly, so it's not quite ready for CRAN.
+You can install the latest released version of envvar by running:
+
+``` r
+install.packages("envvar")
+```
+
 If you’d like to try out the development version, you can install directly from GitHub:
 
 ``` r
