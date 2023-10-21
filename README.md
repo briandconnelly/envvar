@@ -17,15 +17,14 @@ coverage](https://codecov.io/gh/briandconnelly/envvar/branch/main/graph/badge.sv
 Environment variables are a powerful tool that enable your code to react
 to its environment. However, two common design choices are a frequent
 source of friction. First, unlike most other “getter”-type functions,
-functions that retrieve values from environment variable typically fail
-silently. Because of this, additional code to check whether the
-environment variable was set is needed. Second, values are almost always
-returned as strings. This is understandable, but programmers often use
-environment variables to store a wide variety of data types from numbers
-to timestamps to URLs. In this case, additional code is required to
-coerce those strings into their intended format. For frequent users of
-environment variables, writing all this extra code is unpleasant and
-time consuming.
+those functions that retrieve values from environment variable typically
+fail silently. Second, while programmers often use environment variables
+to store a wide variety of data types from numbers to timestamps to
+URLs, values are almost always returned as strings. These choices
+necessitate additional code that checks whether an environment variable
+was actually set and to coerce its value into the intended format. For
+frequent users of environment variables, writing all this extra code is
+unpleasant and time consuming.
 
 ## Failing Loudly
 
