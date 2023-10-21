@@ -16,10 +16,17 @@ test_that("`envvar_get_integer()` works as expected", {
   )
   # `default` should be integer-like
   expect_error(envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 23.31))
-  expect_no_error(envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210))
+  expect_no_error(
+    suppressMessages(
+      envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210)
+    )
+  )
+  expect_message(envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210))
   expect_error(envvar_get_integer("ENVVAR_TEST_INT_NOTSET"))
   expect_equal(
-    envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210),
+    suppressMessages(
+      envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210)
+    ),
     90210
   )
 
@@ -28,10 +35,12 @@ test_that("`envvar_get_integer()` works as expected", {
     envvar_get_integer("ENVVAR_TEST_INT1", validate = \(x) x >= 0)
   )
   expect_error(
-    envvar_get_integer(
-      "ENVVAR_TEST_INT_NOTSET",
-      default = 90210,
-      validate = \(x) x < 100
+    suppressMessages(
+      envvar_get_integer(
+        "ENVVAR_TEST_INT_NOTSET",
+        default = 90210,
+        validate = \(x) x < 100
+      )
     )
   )
 })
@@ -53,7 +62,8 @@ test_that("`envvar_get_numeric()` works as expected", {
     list(
       "ENVVAR_TEST_NUM1" = 12.34,
       "ENVVAR_TEST_NUM2" = -34.56,
-      "ENVVAR_TEST_NUM_NOTSET" = NA_real_
+      "ENVVAR_TEST_NUM_NOTSET" = NA_real_,
+      "ENVVAR_TEST_NOTNUM" = "not_a_number"
     )
   )
 
@@ -61,9 +71,19 @@ test_that("`envvar_get_numeric()` works as expected", {
   expect_equal(envvar_get_numeric("ENVVAR_TEST_NUM1"), 12.34)
 
   expect_error(envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET"))
-  expect_no_error(envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = 1.23))
+  expect_error(envvar_get_numeric("ENVVAR_TEST_NOTNUM"))
+  expect_error(
+    envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = "not_a_number")
+  )
+  expect_no_error(
+    suppressMessages(
+      envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = 1.23)
+    )
+  )
   expect_equal(
-    envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = 123.45),
+    suppressMessages(
+      envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = 123.45)
+    ),
     123.45
   )
 
@@ -72,10 +92,12 @@ test_that("`envvar_get_numeric()` works as expected", {
     envvar_get_numeric("ENVVAR_TEST_NUM1", validate = \(x) x >= 0)
   )
   expect_error(
-    envvar_get_numeric(
-      "ENVVAR_TEST_NUM_NOTSET",
-      default = 902.10,
-      validate = \(x) x < 100
+    suppressMessages(
+      envvar_get_numeric(
+        "ENVVAR_TEST_NUM_NOTSET",
+        default = 902.10,
+        validate = \(x) x < 100
+      )
     )
   )
 })
@@ -101,8 +123,13 @@ test_that("`envvar_get_logical()` works as expected", {
 
   expect_error(envvar_get_logical("TEST_NOTSET"))
   expect_error(envvar_get_logical("TEST_LOGICAL1", default = 123.4))
-  expect_true(envvar_get_logical("TEST_NOTSET", default = TRUE))
-  expect_false(envvar_get_logical("TEST_NOTSET", default = FALSE))
+  expect_true(
+    suppressMessages(envvar_get_logical("TEST_NOTSET", default = TRUE))
+  )
+  expect_false(
+    suppressMessages(envvar_get_logical("TEST_NOTSET", default = FALSE))
+  )
+  expect_message(envvar_get_logical("TEST_NOTSET", default = TRUE))
 
   expect_true(
     envvar_get_logical(
@@ -118,10 +145,12 @@ test_that("`envvar_get_logical()` works as expected", {
   )
 
   expect_no_error(
-    envvar_get_logical(
-      "TEST_NOTSET",
-      default = TRUE,
-      validate = is.logical
+    suppressMessages(
+      envvar_get_logical(
+        "TEST_NOTSET",
+        default = TRUE,
+        validate = is.logical
+      )
     )
   )
 
@@ -141,11 +170,15 @@ test_that("`envvar_get_version()` works as expected", {
   expect_true(is.numeric_version(envvar_get_version("TEST_VERSION")))
   expect_equal(envvar_get_version("TEST_VERSION"), numeric_version("1.2.3"))
 
-  expect_error(envvar_get_version("TEST_NOTSET", use_default = FALSE))
-  expect_no_error(envvar_get_version("TEST_NOTSET", default = "1.2.3"))
+  expect_error(envvar_get_version("TEST_NOTSET"))
+  expect_error(envvar_get_version("TEST_NOTSET", default = "not_a_version"))
+  expect_no_error(
+    suppressMessages(envvar_get_version("TEST_NOTSET", default = "1.2.3"))
+  )
+  expect_message(envvar_get_version("TEST_NOTSET", default = "1.2.3"))
   expect_true(
     is.numeric_version(
-      envvar_get_version("TEST_NOTSET", default = "1.2.3")
+      suppressMessages(envvar_get_version("TEST_NOTSET", default = "1.2.3"))
     )
   )
 
@@ -179,10 +212,13 @@ test_that("`envvar_get_date() works as expected", {
   expect_equal(envvar_get_date("TEST_DATE"), lubridate::as_date("2023-01-02"))
 
   expect_error(envvar_get_date("TEST_NOTSET"))
-  expect_no_error(envvar_get_date("TEST_NOTSET", default = "2023-09-09"))
+  expect_no_error(
+    suppressMessages(envvar_get_date("TEST_NOTSET", default = "2023-09-09"))
+  )
+  expect_message(envvar_get_date("TEST_NOTSET", default = "2023-09-09"))
   expect_true(
     lubridate::is.Date(
-      envvar_get_date("TEST_NOTSET", default = "2023-09-09")
+      suppressMessages(envvar_get_date("TEST_NOTSET", default = "2023-09-09"))
     )
   )
 
@@ -195,18 +231,22 @@ test_that("`envvar_get_date() works as expected", {
   )
 
   expect_no_error(
-    envvar_get_date(
-      "TEST_NOTSET",
-      default = "2023-04-05",
-      validate = \(x) lubridate::year(x) >= 2022
+    suppressMessages(
+      envvar_get_date(
+        "TEST_NOTSET",
+        default = "2023-04-05",
+        validate = \(x) lubridate::year(x) >= 2022
+      )
     )
   )
 
   expect_error(
-    envvar_get_date(
-      "TEST_NOTSET",
-      default = "2023-02-05",
-      validate = \(x) lubridate::month(x) >= 3
+    suppressMessages(
+      envvar_get_date(
+        "TEST_NOTSET",
+        default = "2023-02-05",
+        validate = \(x) lubridate::month(x) >= 3
+      )
     )
   )
 })
@@ -232,10 +272,15 @@ test_that("`envvar_get_datetime() works as expected", {
   )
 
   expect_error(envvar_get_datetime("TEST_NOTSET"))
-  expect_no_error(envvar_get_datetime("TEST_NOTSET", default = "2023-09-09"))
+  expect_no_error(
+    suppressMessages(envvar_get_datetime("TEST_NOTSET", default = "2023-09-09"))
+  )
+  expect_message(envvar_get_datetime("TEST_NOTSET", default = "2023-09-09"))
   expect_true(
     lubridate::is.POSIXct(
-      envvar_get_datetime("TEST_NOTSET", default = "2023-09-09")
+      suppressMessages(
+        envvar_get_datetime("TEST_NOTSET", default = "2023-09-09")
+      )
     )
   )
 
@@ -254,18 +299,22 @@ test_that("`envvar_get_datetime() works as expected", {
   )
 
   expect_no_error(
-    envvar_get_datetime(
-      "TEST_NOTSET",
-      default = "2023-04-05 12:01:42 UTC",
-      validate = \(x) lubridate::year(x) >= 2022
+    suppressMessages(
+      envvar_get_datetime(
+        "TEST_NOTSET",
+        default = "2023-04-05 12:01:42 UTC",
+        validate = \(x) lubridate::year(x) >= 2022
+      )
     )
   )
 
   expect_error(
-    envvar_get_datetime(
-      "TEST_NOTSET",
-      default = "2023-02-05 12:01:42 UTC",
-      validate = \(x) lubridate::month(x) >= 3
+    suppressMessages(
+      envvar_get_datetime(
+        "TEST_NOTSET",
+        default = "2023-02-05 12:01:42 UTC",
+        validate = \(x) lubridate::month(x) >= 3
+      )
     )
   )
 })
