@@ -99,6 +99,12 @@ Using `envvar_get_integer()`:
 envvar_get_integer("NUM_CPUS")
 ```
 
+This extends to default values:
+
+```{r envvar int conversion default, error=TRUE}
+envvar_get_integer("SOME_UNSET_INTEGER", default = 12.345)
+```
+
 envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more.
 We'll work with dates in the next example.
 

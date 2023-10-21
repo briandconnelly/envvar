@@ -109,6 +109,14 @@ envvar_get_integer("NUM_CPUS")
 #> ! "12.345" is not an integer-like value
 ```
 
+This extends to default values:
+
+``` r
+envvar_get_integer("SOME_UNSET_INTEGER", default = 12.345)
+#> Error in `envvar_get_integer()`:
+#> ! `default` value 12.345 should be integer-like.
+```
+
 envvar can handle numbers, logical values, version numbers, URLs,
 timestamps, UUIDs, IP addresses, and more. We’ll work with dates in the
 next example.
