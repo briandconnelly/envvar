@@ -142,7 +142,7 @@ test_that("validate_file() `create` arg works as expected", {
   # creates the file and returns `TRUE`
   tempfile_create <- withr::local_tempfile()
   expect_false(fs::file_exists(tempfile_create))
-  expect_true(validate_file(tempfile_create, create = TRUE))
+  expect_true(suppressMessages(validate_file(tempfile_create, create = TRUE)))
   expect_true(fs::file_exists(tempfile_create))
 })
 
@@ -229,7 +229,7 @@ test_that("validate_dir() `create` arg works as expected", {
 
   # If the directory does not exist and `create` is `TRUE`, `validate_dir()`
   # creates the directory and returns `TRUE`
-  expect_true(validate_dir(tempdir, create = TRUE))
+  expect_true(suppressMessages(validate_dir(tempdir, create = TRUE)))
   expect_true(fs::dir_exists(tempdir))
 
   fs::file_chmod(tempdir, mode = "777")

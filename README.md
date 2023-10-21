@@ -17,13 +17,12 @@ coverage](https://codecov.io/gh/briandconnelly/envvar/branch/main/graph/badge.sv
 Environment variables are a powerful tool that enable your code to react
 to its environment. However, two common design choices are a frequent
 source of friction. First, unlike most other “getter”-type functions,
-functions that retrieve values from environment variable typically fail
-silently. Because of this, additional code to check whether the
-environment variable was set are needed. Second, values are almost
-always returned as strings. This is understandable, but programmers
-often use environment variables to store a wide variety of data types
-from numbers to timestamps to URLs. In this case, additional code is
-required to coerce those strings into their intended format. For
+those functions that retrieve values from environment variable typically
+fail silently. Second, while programmers often use environment variables
+to store a wide variety of data types from numbers to timestamps to
+URLs, values are almost always returned as strings. These choices
+necessitate additional code that checks whether an environment variable
+was actually set and to coerce its value into the intended format. For
 frequent users of environment variables, writing all this extra code is
 unpleasant and time consuming.
 
@@ -31,7 +30,8 @@ unpleasant and time consuming.
 
 envvar takes a slightly opinionated perspective to make working with
 environment variables easier and more consistent. Unless a default value
-is explicitly given, `envvar_get()` raises an error.
+is explicitly given, `envvar_get()` raises an error if an environment
+variable is not defined.
 
 For example, let’s say our code depends on an environment variable
 called `NUM_CPUS`. In base R, we have to first get the value using
@@ -87,17 +87,46 @@ envvar_get_integer("NUM_CPUS") / 2
 #> [1] 4
 ```
 
+Returning to the theme of failing loudly, envvar’s type-specific
+functions will also fail if a value cannot be coerced to the expected
+type. For example, using `Sys.getenv()` and `as.integer` to load what
+*should be* an integer value might not produce what you’d expect.
+
+``` r
+Sys.setenv("NUM_CPUS" = 12.345)
+
+num_cpus <- as.integer(Sys.getenv("NUM_CPUS"))
+num_cpus
+#> [1] 12
+```
+
+Using `envvar_get_integer()`:
+
+``` r
+envvar_get_integer("NUM_CPUS")
+#> Error in `transform()`:
+#> ! "12.345" is not an integer-like value
+```
+
+This extends to default values:
+
+``` r
+envvar_get_integer("SOME_UNSET_INTEGER", default = 12.345)
+#> Error in `envvar_get_integer()`:
+#> ! `default` value 12.345 should be integer-like.
+```
+
 envvar can handle numbers, logical values, version numbers, URLs,
-timestamps, UUIDs, IP addresses, and more. You can add support for
-additional data types using the `transform` argument to `envvar_get()`.
-We’ll work with dates in the next example.
+timestamps, UUIDs, IP addresses, and more. We’ll work with dates in the
+next example.
 
 ## Validation
 
-envvar’s `envvar_get` functions can also apply validation logic. For
-this example, let’s set an environment variable called `LAUNCH_DATE`
-that absolutely, positively must be in the future. Let’s first set it to
-a date in the past.
+Sometimes being the right type isn’t enough. envvar’s `envvar_get`
+functions can also apply validation logic. For this example, let’s set
+an environment variable called `LAUNCH_DATE` that stores a date that
+absolutely, positively must be in the future. Let’s first set it to a
+date in the past.
 
 ``` r
 envvar_set("LAUNCH_DATE" = "1969-07-16")
@@ -128,9 +157,14 @@ that fanciness.
 
 ## Installation
 
-envvar is still changing quickly, so it’s not quite ready for CRAN. If
-you’d like to try out the development version, you can install directly
-from GitHub:
+You can install the latest released version of envvar by running:
+
+``` r
+install.packages("envvar")
+```
+
+If you’d like to try out the development version, you can install
+directly from GitHub:
 
 ``` r
 # install.packages("remotes")

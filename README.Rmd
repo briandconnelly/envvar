@@ -24,17 +24,16 @@ knitr::opts_chunk$set(
 
 Environment variables are a powerful tool that enable your code to react to its environment.
 However, two common design choices are a frequent source of friction.
-First, unlike most other "getter"-type functions, functions that retrieve values from environment variable typically fail silently.
-Because of this, additional code to check whether the environment variable was set are needed.
-Second, values are almost always returned as strings.
-This is understandable, but programmers often use environment variables to store a wide variety of data types from numbers to timestamps to URLs.
-In this case, additional code is required to coerce those strings into their intended format.
+First, unlike most other "getter"-type functions, those functions that retrieve values from environment variable typically fail silently.
+Second, while programmers often use environment variables to store a wide variety of data types from numbers to timestamps to URLs, values are almost always returned as strings.
+These choices necessitate additional code that checks whether an environment variable was actually set and to coerce its value into the intended format.
 For frequent users of environment variables, writing all this extra code is unpleasant and time consuming.
+
 
 ## Failing Loudly
 
 envvar takes a slightly opinionated perspective to make working with environment variables easier and more consistent.
-Unless a default value is explicitly given, `envvar_get()` raises an error.
+Unless a default value is explicitly given, `envvar_get()` raises an error if an environment variable is not defined.
 
 For example, let's say our code depends on an environment variable called `NUM_CPUS`.
 In base R, we have to first get the value using `Sys.getenv()` and then see whether the result is the empty string (not `NA` like you might expect):
@@ -83,15 +82,37 @@ Here, we'll use `envvar_get_integer()` to get `NUM_CPUS` and return it as an int
 envvar_get_integer("NUM_CPUS") / 2
 ```
 
+Returning to the theme of failing loudly, envvar's type-specific functions will also fail if a value cannot be coerced to the expected type.
+For example, using `Sys.getenv()` and `as.integer` to load what _should be_ an integer value might not produce what you'd expect.
+
+```{r base int conversion}
+Sys.setenv("NUM_CPUS" = 12.345)
+
+num_cpus <- as.integer(Sys.getenv("NUM_CPUS"))
+num_cpus
+```
+
+Using `envvar_get_integer()`:
+
+```{r envvar int conversion, error=TRUE}
+envvar_get_integer("NUM_CPUS")
+```
+
+This extends to default values:
+
+```{r envvar int conversion default, error=TRUE}
+envvar_get_integer("SOME_UNSET_INTEGER", default = 12.345)
+```
+
 envvar can handle numbers, logical values, version numbers, URLs, timestamps, UUIDs, IP addresses, and more.
-You can add support for additional data types using the `transform` argument to `envvar_get()`.
 We'll work with dates in the next example.
 
 
 ## Validation
 
+Sometimes being the right type isn't enough.
 envvar's `envvar_get` functions can also apply validation logic.
-For this example, let's set an environment variable called `LAUNCH_DATE` that absolutely, positively must be in the future.
+For this example, let's set an environment variable called `LAUNCH_DATE` that stores a date that absolutely, positively must be in the future.
 Let's first set it to a date in the past.
 
 ```{r set launch date past}
@@ -118,7 +139,12 @@ If you're in need of complex validation, just use a function that encapsulates a
 
 ## Installation
 
-envvar is still changing quickly, so it's not quite ready for CRAN.
+You can install the latest released version of envvar by running:
+
+``` r
+install.packages("envvar")
+```
+
 If you’d like to try out the development version, you can install directly from GitHub:
 
 ``` r
