@@ -1,11 +1,12 @@
 Package: envvar
-Title: Make working with environment variables easier and more consistent
+Title: Make Working with Environment Variables Easier and More Consistent
 Version: 0.0.0.9000
 Authors@R:
     person("Brian", "Connelly", , "bdc@bconnelly.net", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-9948-0379"))
-Description: envvar makes it easy to set, check, retrieve, transform, and
-    validate environment variables.
+Description: A collection of functions that allows for easy and consistent use
+  of environment variables. This includes setting, checking, retrieving,
+  transforming, and validating values stored in environment variables.
 License: MIT + file LICENSE
 URL: https://github.com/briandconnelly/envvar,
     https://briandconnelly.github.io/envvar/
