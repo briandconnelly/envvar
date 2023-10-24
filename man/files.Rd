@@ -54,9 +54,15 @@ variable
 # Get a file path and make sure it exists
 envvar_set("MY_DATA" = "data.parquet")
 envvar_get_file("MY_DATA")
+
+# Cleanup
+file.remove("data.parquet")
 }
 \donttest{
-envvar_set("MY_DATA_DIR" = "/tmp/data/")
+envvar_set("MY_DATA_DIR" = "data")
 envvar_get_dir("MY_DATA_DIR")
+
+# Cleanup
+unlink("data", recursive = TRUE)
 }
 }
