@@ -1,4 +1,5 @@
 * Documentation for functions with no return value has been update to explicitly state this
+* For examples that may fail in some instances, replace \dontrun with \donttest
 
 ## R CMD check results
 

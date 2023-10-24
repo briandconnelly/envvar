@@ -13,11 +13,10 @@
 #' @return A string containing the path to a file or directory
 #' @export
 #' @examples
-#'
+#' \donttest{
 #' # Get a file path and make sure it exists
-#' \dontrun{
-#' envvar_set("MYDATA" = "/tmp/data.parquet")
-#' envvar_get_file("MYDATA")
+#' envvar_set("MY_DATA" = "/tmp/data.parquet")
+#' envvar_get_file("MY_DATA")
 #' }
 envvar_get_file <- function(x,
                             create = TRUE,
@@ -75,11 +74,9 @@ validate_file <- function(x,
 #' @inheritParams envvar
 #' @export
 #' @examples
-#'
-#' # Get a file path and make sure it exists
-#' \dontrun{
-#' envvar_set("MYDATADIR" = "/tmp/data/")
-#' envvar_get_dir("MYDATADIR")
+#' \donttest{
+#' envvar_set("MY_DATA_DIR" = "/tmp/data/")
+#' envvar_get_dir("MY_DATA_DIR")
 #' }
 envvar_get_dir <- function(x,
                            create = TRUE,
