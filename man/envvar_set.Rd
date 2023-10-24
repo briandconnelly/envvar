@@ -14,6 +14,9 @@ envvar_unset(x)
 
 \item{x}{String with the name of environment variable}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 \code{envvar_set()} sets one or more environment variables.
 

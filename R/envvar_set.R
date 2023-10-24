@@ -4,6 +4,7 @@
 #' @description `envvar_set()` sets one or more environment variables.
 #'
 #' @param ... Named arguments containing an environment variable and its value
+#' @return No return value, called for side effects
 #' @export
 #'
 #' @examples
