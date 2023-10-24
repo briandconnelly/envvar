@@ -15,7 +15,7 @@
 #' @examples
 #' \donttest{
 #' # Get a file path and make sure it exists
-#' envvar_set("MY_DATA" = "/tmp/data.parquet")
+#' envvar_set("MY_DATA" = "data.parquet")
 #' envvar_get_file("MY_DATA")
 #' }
 envvar_get_file <- function(x,
