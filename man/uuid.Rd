@@ -13,8 +13,11 @@ envvar_get_uuid(x, default = NULL, validate = NULL)
 
 \item{validate}{Optional function that checks a value for validity}
 }
+\value{
+An object of the class \code{"UUID"} representing a vector of UUIDs.
+}
 \description{
-\code{envvar_get_uuid} gets a UUID from an environment variable
+\code{envvar_get_uuid()} gets a UUID from an environment variable
 }
 \examples{
 

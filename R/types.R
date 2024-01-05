@@ -3,6 +3,7 @@
 #' @description `envvar_get_integer()` reads environment variables with integer
 #'   values (e.g., `15`, `0`, `-1`)
 #' @inheritParams envvar_get
+#' @return A scalar object
 #' @export
 #' @examples
 #'

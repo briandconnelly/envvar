@@ -4,9 +4,9 @@
 \name{envvar-package}
 \alias{envvar}
 \alias{envvar-package}
-\title{envvar: Make working with environment variables easier and more consistent}
+\title{envvar: Make Working with Environment Variables Easier and More Consistent}
 \description{
-envvar makes it easy to set, check, retrieve, transform, and validate environment variables.
+A collection of functions that allows for easy and consistent use of environment variables. This includes setting, checking, retrieving, transforming, and validating values stored in environment variables.
 }
 \seealso{
 Useful links:

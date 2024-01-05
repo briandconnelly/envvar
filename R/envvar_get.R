@@ -30,7 +30,6 @@
 #' @examples
 #' # Get the current user's home directory
 #' envvar_get("HOME")
-#'
 envvar_get <- function(x,
                        default = NULL,
                        transform = NULL,
@@ -73,10 +72,13 @@ envvar_get <- function(x,
 #' @param choices A list containing the potential values
 #' @export
 #' @examples
-#' # Get the current user, making sure it is either 'root' or 'alice'
-#' \dontrun{
-#' envvar_get_oneof("USER", choices = c("root", "alice"))
-#' }
+#'
+#' # Get the current logging level for your app, ensuring it is a known value
+#' envvar_set("LOG_LEVEL" = "DEBUG")
+#' envvar_get_oneof(
+#'   "LOG_LEVEL",
+#'   choices = c("TRACE", "DEBUG", "INFO", "SUCCESS", "WARN", "ERROR", "FATAL")
+#' )
 envvar_get_oneof <- function(x,
                              choices,
                              default = NULL,

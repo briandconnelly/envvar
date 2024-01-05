@@ -39,23 +39,30 @@ variable's value}
 \item{...}{Additional arguments passed to \link[fs:create]{fs::file_create} for
 \code{envvar_get_file()} or \link[fs:create]{fs::dir_create} for \code{envvar_get_dir()}}
 }
+\value{
+A string containing the path to a file or directory
+}
 \description{
-\code{envvar_get_file} gets a file name from an environment variable
+\code{envvar_get_file()} gets a file name from an environment
+variable
 
-\code{envvar_get_dir} gets a directory name from an environment
+\code{envvar_get_dir()} gets a directory name from an environment
 variable
 }
 \examples{
-
+\donttest{
 # Get a file path and make sure it exists
-\dontrun{
-envvar_set("MYDATA" = "/tmp/data.parquet")
-envvar_get_file("MYDATA")
+envvar_set("MY_DATA" = "data.parquet")
+envvar_get_file("MY_DATA")
+
+# Cleanup
+file.remove("data.parquet")
 }
+\donttest{
+envvar_set("MY_DATA_DIR" = "data")
+envvar_get_dir("MY_DATA_DIR")
 
-# Get a file path and make sure it exists
-\dontrun{
-envvar_set("MYDATADIR" = "/tmp/data/")
-envvar_get_dir("MYDATADIR")
+# Cleanup
+unlink("data", recursive = TRUE)
 }
 }

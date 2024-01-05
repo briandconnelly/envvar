@@ -1,8 +1,11 @@
 #' @rdname network
 #' @title Environment variables for internet and network-related values
-#' @description `envvar_get_url` gets a URL value from an environment
+#' @description `envvar_get_url()` gets a URL value from an environment
 #'   variable and parses it with [httr2::url_parse].
 #' @inheritParams envvar_get
+#' @return `envvar_get_url()` returns a URL: an S3 list with class `httr2_url`
+#' and elements `scheme`, `hostname`, `port`, `path`, `fragment`, `query`,
+#' `username`, `password`, where applicable.
 #' @export
 #' @examples
 #'
@@ -23,8 +26,9 @@ envvar_get_url <- function(x,
 }
 
 #' @rdname network
-#' @description `envvar_get_ipaddress` gets an IP address value from an
+#' @description `envvar_get_ipaddress()` gets an IP address value from an
 #'   environment variable
+#' @return `envvar_get_ipaddress()` returns an `ip_address` vector
 #' @export
 #' @examples
 #'
