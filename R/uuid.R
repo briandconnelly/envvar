@@ -12,7 +12,8 @@
 #' envvar_get_uuid("DEMO_GUID")
 envvar_get_uuid <- function(x,
                             default = NULL,
-                            validate = NULL) {
+                            validate = NULL,
+                            warn_default = TRUE) {
   rlang::check_installed("uuid")
 
   envvar_get(
@@ -25,6 +26,7 @@ envvar_get_uuid <- function(x,
       }
       uuid
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }

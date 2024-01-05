@@ -9,17 +9,23 @@
 \alias{envvar_get_datetime}
 \title{Get the value of an environment variable as a particular type}
 \usage{
-envvar_get_integer(x, default = NULL, validate = NULL)
+envvar_get_integer(x, default = NULL, validate = NULL, warn_default = TRUE)
 
-envvar_get_numeric(x, default = NULL, validate = NULL)
+envvar_get_numeric(x, default = NULL, validate = NULL, warn_default = TRUE)
 
-envvar_get_logical(x, default = NULL, validate = NULL)
+envvar_get_logical(x, default = NULL, validate = NULL, warn_default = TRUE)
 
-envvar_get_version(x, default = NULL, validate = NULL)
+envvar_get_version(x, default = NULL, validate = NULL, warn_default = TRUE)
 
-envvar_get_date(x, default = NULL, validate = NULL, ...)
+envvar_get_date(x, default = NULL, validate = NULL, warn_default = TRUE, ...)
 
-envvar_get_datetime(x, default = NULL, validate = NULL, ...)
+envvar_get_datetime(
+  x,
+  default = NULL,
+  validate = NULL,
+  warn_default = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -27,6 +33,9 @@ envvar_get_datetime(x, default = NULL, validate = NULL, ...)
 \item{default}{Optional default value if the environment variable is not set}
 
 \item{validate}{Optional function that checks a value for validity}
+
+\item{warn_default}{Show a warning if the default value is used
+(default: \code{TRUE})}
 
 \item{...}{Additional arguments passed to \link[lubridate:as_date]{lubridate::as_date} for
 \code{envvar_get_date()} or \link[lubridate:as_date]{lubridate::as_datetime} for \code{envvar_get_datetime()}}

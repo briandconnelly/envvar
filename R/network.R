@@ -14,14 +14,16 @@
 #' envvar_get_url("TEST_URL", validate = \(x) x$scheme == "https")
 envvar_get_url <- function(x,
                            default = NULL,
-                           validate = NULL) {
+                           validate = NULL,
+                           warn_default = TRUE) {
   rlang::check_installed("httr2")
 
   envvar_get(
     x,
     default = default,
     transform = httr2::url_parse,
-    validate = validate
+    validate = validate,
+    warn_default = TRUE
   )
 }
 
@@ -37,7 +39,8 @@ envvar_get_url <- function(x,
 #' envvar_get_ipaddress("TEST_HOST", validate = ipaddress::is_ipv4)
 envvar_get_ipaddress <- function(x,
                                  default = NULL,
-                                 validate = NULL) {
+                                 validate = NULL,
+                                 warn_default = TRUE) {
   rlang::check_installed("ipaddress")
 
   envvar_get(
@@ -50,6 +53,7 @@ envvar_get_ipaddress <- function(x,
       }
       ip
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }

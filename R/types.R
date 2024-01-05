@@ -12,7 +12,8 @@
 #' envvar_get_integer("MYNUMBER") + 5
 envvar_get_integer <- function(x,
                                default = NULL,
-                               validate = NULL) {
+                               validate = NULL,
+                               warn_default = TRUE) {
   if (!rlang::is_null(default) && !rlang::is_scalar_integerish(default)) {
     cli::cli_abort("{.arg default} value {.val {default}} should be integer-like.") # nolint: line_length_linter
   }
@@ -27,7 +28,8 @@ envvar_get_integer <- function(x,
         as.integer(x)
       }
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
 
@@ -43,7 +45,8 @@ envvar_get_integer <- function(x,
 #' envvar_get_numeric("MYNUMBER") + 5
 envvar_get_numeric <- function(x,
                                default = NULL,
-                               validate = NULL) {
+                               validate = NULL,
+                               warn_default = TRUE) {
   if (!rlang::is_null(default) && !rlang::is_scalar_double(default)) {
     cli::cli_abort("{.arg default} value {.val {default}} should be numeric.") # nolint: line_length_linter
   }
@@ -60,7 +63,8 @@ envvar_get_numeric <- function(x,
         val
       }
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
 
@@ -75,7 +79,8 @@ envvar_get_numeric <- function(x,
 #' isTRUE(envvar_get_logical("RSTUDIO_CLI_HYPERLINKS", default = FALSE))
 envvar_get_logical <- function(x,
                                default = NULL,
-                               validate = NULL) {
+                               validate = NULL,
+                               warn_default = TRUE) {
   if (!rlang::is_null(default) && !rlang::is_scalar_logical(default)) {
     cli::cli_abort("{.arg default} value {.val {default}} should be a logical value.") # nolint: line_length_linter
   }
@@ -94,7 +99,8 @@ envvar_get_logical <- function(x,
         NA
       }
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
 
@@ -109,7 +115,8 @@ envvar_get_logical <- function(x,
 #' envvar_get_version("MY_VER", validate = \(x) x > as.numeric_version("4.3"))
 envvar_get_version <- function(x,
                                default = NULL,
-                               validate = NULL) {
+                               validate = NULL,
+                               warn_default = TRUE) {
   if (!rlang::is_null(default) && !is.numeric_version(default) && rlang::is_na(numeric_version(default, strict = FALSE))) { # nolint: line_length_linter
     cli::cli_abort("{.arg default} value {.val {default}} should be a numeric version.") # nolint: line_length_linter
   }
@@ -118,7 +125,8 @@ envvar_get_version <- function(x,
     x,
     default = default,
     transform = as.numeric_version,
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
 
@@ -136,6 +144,7 @@ envvar_get_version <- function(x,
 envvar_get_date <- function(x,
                             default = NULL,
                             validate = NULL,
+                            warn_default = TRUE,
                             ...) {
   rlang::check_dots_used()
   envvar_get(
@@ -144,7 +153,8 @@ envvar_get_date <- function(x,
     transform = function(x) {
       lubridate::as_date(x, ...)
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
 
@@ -158,6 +168,7 @@ envvar_get_date <- function(x,
 envvar_get_datetime <- function(x,
                                 default = NULL,
                                 validate = NULL,
+                                warn_default = TRUE,
                                 ...) {
   rlang::check_dots_used()
   envvar_get(
@@ -166,6 +177,7 @@ envvar_get_datetime <- function(x,
     transform = function(x) {
       lubridate::as_datetime(x, ...)
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
