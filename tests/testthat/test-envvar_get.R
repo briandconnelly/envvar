@@ -54,6 +54,9 @@ test_that("envvar_get() shows message if variable unset and `default` given", {
   envvar_get("TESTENV_ENVVAR", default = "HELLO") |>
     expect_equal("HELLO") |>
     expect_snapshot()
+
+  envvar_get("TESTENV_ENVVAR", default = "HELLO", warn_default = FALSE) |>
+    expect_no_warning()
 })
 
 test_that("envvar_get() `transform` function works as expected", {
