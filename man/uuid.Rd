@@ -4,7 +4,7 @@
 \alias{envvar_get_uuid}
 \title{Environment variables for UUIDs}
 \usage{
-envvar_get_uuid(x, default = NULL, validate = NULL)
+envvar_get_uuid(x, default = NULL, validate = NULL, warn_default = TRUE)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -12,6 +12,9 @@ envvar_get_uuid(x, default = NULL, validate = NULL)
 \item{default}{Optional default value if the environment variable is not set}
 
 \item{validate}{Optional function that checks a value for validity}
+
+\item{warn_default}{Show a warning if the default value is used
+(default: \code{TRUE})}
 }
 \value{
 An object of the class \code{"UUID"} representing a vector of UUIDs.

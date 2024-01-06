@@ -5,9 +5,22 @@
 \alias{envvar_get_oneof}
 \title{Get the value of an environment variable}
 \usage{
-envvar_get(x, default = NULL, transform = NULL, validate = NULL)
+envvar_get(
+  x,
+  default = NULL,
+  transform = NULL,
+  validate = NULL,
+  warn_default = TRUE
+)
 
-envvar_get_oneof(x, choices, default = NULL, transform = NULL, validate = NULL)
+envvar_get_oneof(
+  x,
+  choices,
+  default = NULL,
+  transform = NULL,
+  validate = NULL,
+  warn_default = TRUE
+)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -18,6 +31,9 @@ envvar_get_oneof(x, choices, default = NULL, transform = NULL, validate = NULL)
 variable's value}
 
 \item{validate}{Optional function that checks a value for validity}
+
+\item{warn_default}{Show a warning if the default value is used
+(default: \code{TRUE})}
 
 \item{choices}{A list containing the potential values}
 }

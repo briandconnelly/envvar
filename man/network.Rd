@@ -5,9 +5,9 @@
 \alias{envvar_get_ipaddress}
 \title{Environment variables for internet and network-related values}
 \usage{
-envvar_get_url(x, default = NULL, validate = NULL)
+envvar_get_url(x, default = NULL, validate = NULL, warn_default = TRUE)
 
-envvar_get_ipaddress(x, default = NULL, validate = NULL)
+envvar_get_ipaddress(x, default = NULL, validate = NULL, warn_default = TRUE)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -15,6 +15,9 @@ envvar_get_ipaddress(x, default = NULL, validate = NULL)
 \item{default}{Optional default value if the environment variable is not set}
 
 \item{validate}{Optional function that checks a value for validity}
+
+\item{warn_default}{Show a warning if the default value is used
+(default: \code{TRUE})}
 }
 \value{
 \code{envvar_get_url()} returns a URL: an S3 list with class \code{httr2_url}

@@ -6,11 +6,18 @@
 \alias{envvar_get_psv}
 \title{Environment variables containing lists}
 \usage{
-envvar_get_list(x, pattern = ":", default = NULL, validate = NULL, ...)
+envvar_get_list(
+  x,
+  pattern = ":",
+  default = NULL,
+  validate = NULL,
+  warn_default = TRUE,
+  ...
+)
 
-envvar_get_csv(x, default = NA, validate = NULL)
+envvar_get_csv(x, default = NA, validate = NULL, warn_default = TRUE)
 
-envvar_get_psv(x, default = NA, validate = NULL)
+envvar_get_psv(x, default = NA, validate = NULL, warn_default = TRUE)
 }
 \arguments{
 \item{x}{String containing an environment variable name}
@@ -21,6 +28,9 @@ list.}
 \item{default}{Optional default value if the environment variable is not set}
 
 \item{validate}{Optional function that checks a value for validity}
+
+\item{warn_default}{Show a warning if the default value is used
+(default: \code{TRUE})}
 
 \item{...}{Additional arguments passed to \link{strsplit}}
 }

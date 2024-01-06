@@ -24,6 +24,7 @@ envvar_get_list <- function(x,
                             pattern = ":",
                             default = NULL,
                             validate = NULL,
+                            warn_default = TRUE,
                             ...) {
   assert_scalar_string(pattern)
   # TODO: validate `default`
@@ -35,7 +36,8 @@ envvar_get_list <- function(x,
     transform = function(x) {
       strsplit(x, split = pattern, ...)[[1]]
     },
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
 
@@ -47,12 +49,14 @@ envvar_get_list <- function(x,
 #'
 envvar_get_csv <- function(x,
                            default = NA,
-                           validate = NULL) {
+                           validate = NULL,
+                           warn_default = TRUE) {
   envvar_get_list(
     x,
     pattern = "\\s*,\\s*",
     default = default,
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }
 
@@ -62,11 +66,13 @@ envvar_get_csv <- function(x,
 #'
 envvar_get_psv <- function(x,
                            default = NA,
-                           validate = NULL) {
+                           validate = NULL,
+                           warn_default = TRUE) {
   envvar_get_list(
     x,
     pattern = "\\s*\\|\\s*",
     default = default,
-    validate = validate
+    validate = validate,
+    warn_default = warn_default
   )
 }

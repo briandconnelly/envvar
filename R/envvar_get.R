@@ -22,6 +22,8 @@
 #' @param transform Optional function that applies a transformation to the
 #'   variable's value
 #' @param validate Optional function that checks a value for validity
+#' @param warn_default Show a warning if the default value is used
+#'   (default: `TRUE`)
 #'
 #' @return The value of the given environment variable, if set. This is a string
 #'   unless a `transform` function has changed the object's type.
@@ -33,7 +35,8 @@
 envvar_get <- function(x,
                        default = NULL,
                        transform = NULL,
-                       validate = NULL) {
+                       validate = NULL,
+                       warn_default = TRUE) {
   assert_scalar_string(x)
   assert_function(transform, null_ok = TRUE)
   assert_function(validate, null_ok = TRUE)
@@ -44,7 +47,9 @@ envvar_get <- function(x,
     if (rlang::is_null(default)) {
       cli::cli_abort("Environment variable {.envvar {x}} is not set.")
     } else {
-      cli::cli_alert_info("Environment variable {.envvar {x}} is not set. Using default value {.val {default}}.") # nolint: line_length_linter
+      if (warn_default) {
+        cli::cli_alert_info("Environment variable {.envvar {x}} is not set. Using default value {.val {default}}.") # nolint: line_length_linter
+      }
       value_raw <- default
     }
   }
@@ -83,7 +88,8 @@ envvar_get_oneof <- function(x,
                              choices,
                              default = NULL,
                              transform = NULL,
-                             validate = NULL) {
+                             validate = NULL,
+                             warn_default = TRUE) {
   if (length(choices) < 1) {
     cli::cli_abort("{.arg choices} must include at least one valid choice")
   }
@@ -94,6 +100,7 @@ envvar_get_oneof <- function(x,
     transform = transform,
     validate = function(x) {
       x %in% choices
-    }
+    },
+    warn_default = warn_default
   )
 }
