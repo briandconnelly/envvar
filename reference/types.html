@@ -84,17 +84,23 @@ values (e.g., <code>"2023-01-02 01:23:45 UTC"</code> or 1697037804)</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">envvar_get_integer</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">envvar_get_integer</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span>, warn_default <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">envvar_get_numeric</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">envvar_get_numeric</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span>, warn_default <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">envvar_get_logical</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">envvar_get_logical</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span>, warn_default <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">envvar_get_version</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span><span class="fu">envvar_get_version</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span>, warn_default <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">envvar_get_date</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">envvar_get_date</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span>, warn_default <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">envvar_get_datetime</span><span class="op">(</span><span class="va">x</span>, default <span class="op">=</span> <span class="cn">NULL</span>, validate <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">envvar_get_datetime</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  default <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  validate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  warn_default <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -109,6 +115,11 @@ values (e.g., <code>"2023-01-02 01:23:45 UTC"</code> or 1697037804)</p>
 
 <dt>validate</dt>
 <dd><p>Optional function that checks a value for validity</p></dd>
+
+
+<dt>warn_default</dt>
+<dd><p>Show a warning if the default value is used
+(default: <code>TRUE</code>)</p></dd>
 
 
 <dt>...</dt>
