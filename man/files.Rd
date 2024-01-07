@@ -7,6 +7,7 @@
 \usage{
 envvar_get_file(
   x,
+  default = NULL,
   create = TRUE,
   check_readable = FALSE,
   check_writable = FALSE,
@@ -16,6 +17,7 @@ envvar_get_file(
 
 envvar_get_dir(
   x,
+  default = NULL,
   create = TRUE,
   transform = NULL,
   check_readable = FALSE,
@@ -25,6 +27,8 @@ envvar_get_dir(
 }
 \arguments{
 \item{x}{String containing an environment variable name}
+
+\item{default}{Optional default value if the environment variable is not set}
 
 \item{create}{Create the file or directory if it does not exist (default:
 \code{TRUE})}
