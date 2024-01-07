@@ -32,6 +32,13 @@ test_that("envvar_get_file() succeeds when var not set but default given", {
   tempfile <- withr::local_tempfile(pattern = "envvar")
   envvar_get_file("ENVVAR_FILE_NOT_SET", default = tempfile) |>
     expect_message()
+
+  envvar_get_file(
+    "ENVVAR_FILE_NOT_SET",
+    default = tempfile,
+    warn_default = FALSE
+  ) |>
+    expect_no_message()
 })
 
 test_that("envvar_get_file() validates `create` arguments correctly", {
@@ -102,6 +109,13 @@ test_that("envvar_get_dir() succeeds when var not set but default given", {
   tempdir <- withr::local_tempdir(pattern = "envvar")
   envvar_get_dir("ENVVAR_DIR_NOT_SET", default = tempdir) |>
     expect_message()
+
+  envvar_get_dir(
+    "ENVVAR_DIR_NOT_SET",
+    default = tempdir,
+    warn_default = FALSE
+  ) |>
+    expect_no_message()
 })
 
 test_that("envvar_get_dir() validates `create` arguments correctly", {

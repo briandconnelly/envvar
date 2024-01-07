@@ -27,6 +27,7 @@ envvar_get_file <- function(x,
                             check_readable = FALSE,
                             check_writable = FALSE,
                             transform = NULL,
+                            warn_default = TRUE,
                             ...) {
   assert_flag(create)
   assert_flag(check_readable)
@@ -45,7 +46,8 @@ envvar_get_file <- function(x,
         check_writable = check_writable,
         ...
       )
-    }
+    },
+    warn_default = warn_default
   )
 }
 
@@ -91,6 +93,7 @@ envvar_get_dir <- function(x,
                            transform = NULL,
                            check_readable = FALSE,
                            check_writable = FALSE,
+                           warn_default = TRUE,
                            ...) {
   assert_flag(create)
   assert_flag(check_readable)
@@ -109,7 +112,8 @@ envvar_get_dir <- function(x,
         check_writable = check_writable,
         ...
       )
-    }
+    },
+    warn_default = warn_default
   )
 }
 

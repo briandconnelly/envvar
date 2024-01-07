@@ -12,6 +12,7 @@ envvar_get_file(
   check_readable = FALSE,
   check_writable = FALSE,
   transform = NULL,
+  warn_default = TRUE,
   ...
 )
 
@@ -22,6 +23,7 @@ envvar_get_dir(
   transform = NULL,
   check_readable = FALSE,
   check_writable = FALSE,
+  warn_default = TRUE,
   ...
 )
 }
@@ -39,6 +41,9 @@ envvar_get_dir(
 
 \item{transform}{Optional function that applies a transformation to the
 variable's value}
+
+\item{warn_default}{Show a warning if the default value is used
+(default: \code{TRUE})}
 
 \item{...}{Additional arguments passed to \link[fs:create]{fs::file_create} for
 \code{envvar_get_file()} or \link[fs:create]{fs::dir_create} for \code{envvar_get_dir()}}
