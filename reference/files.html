@@ -62,19 +62,23 @@ variable</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">envvar_get_file</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
+<span>  default <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  create <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  check_readable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_writable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  warn_default <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">envvar_get_dir</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
+<span>  default <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  create <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  transform <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  check_readable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  check_writable <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  warn_default <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -83,6 +87,10 @@ variable</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>String containing an environment variable name</p></dd>
+
+
+<dt>default</dt>
+<dd><p>Optional default value if the environment variable is not set</p></dd>
 
 
 <dt>create</dt>
@@ -101,6 +109,11 @@ variable</p>
 <dt>transform</dt>
 <dd><p>Optional function that applies a transformation to the
 variable's value</p></dd>
+
+
+<dt>warn_default</dt>
+<dd><p>Show a warning if the default value is used
+(default: <code>TRUE</code>)</p></dd>
 
 
 <dt>...</dt>
