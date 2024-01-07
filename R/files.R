@@ -22,10 +22,12 @@
 #' file.remove("data.parquet")
 #' }
 envvar_get_file <- function(x,
+                            default = NULL,
                             create = TRUE,
                             check_readable = FALSE,
                             check_writable = FALSE,
                             transform = NULL,
+                            warn_default = TRUE,
                             ...) {
   assert_flag(create)
   assert_flag(check_readable)
@@ -34,7 +36,7 @@ envvar_get_file <- function(x,
 
   envvar_get(
     x,
-    default = NA_character_,
+    default = default,
     transform = transform,
     validate = function(x) {
       validate_file(
@@ -44,7 +46,8 @@ envvar_get_file <- function(x,
         check_writable = check_writable,
         ...
       )
-    }
+    },
+    warn_default = warn_default
   )
 }
 
@@ -85,10 +88,12 @@ validate_file <- function(x,
 #' unlink("data", recursive = TRUE)
 #' }
 envvar_get_dir <- function(x,
+                           default = NULL,
                            create = TRUE,
                            transform = NULL,
                            check_readable = FALSE,
                            check_writable = FALSE,
+                           warn_default = TRUE,
                            ...) {
   assert_flag(create)
   assert_flag(check_readable)
@@ -97,7 +102,7 @@ envvar_get_dir <- function(x,
 
   envvar_get(
     x,
-    default = NA_character_,
+    default = default,
     transform = transform,
     validate = function(x) {
       validate_dir(
@@ -107,7 +112,8 @@ envvar_get_dir <- function(x,
         check_writable = check_writable,
         ...
       )
-    }
+    },
+    warn_default = warn_default
   )
 }
 
