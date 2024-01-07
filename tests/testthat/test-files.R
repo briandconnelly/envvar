@@ -28,6 +28,12 @@ test_that("envvar_get_file() validates `x` arguments correctly", {
   )
 })
 
+test_that("envvar_get_file() succeeds when var not set but default given", {
+  tempfile <- withr::local_tempfile(pattern = "envvar")
+  envvar_get_file("ENVVAR_FILE_NOT_SET", default = tempfile) |>
+    expect_message()
+})
+
 test_that("envvar_get_file() validates `create` arguments correctly", {
   # `create` should be a logical scalar
   expect_error(envvar_get_file("ENVVAR_TEMP_FILE_EXISTS", create = NULL))
@@ -90,6 +96,12 @@ test_that("envvar_get_dir() validates `x` arguments correctly", {
   expect_error(
     envvar_get_dir(x = c("ENVVAR_TEMP_DIR_EXISTS", "ENVVAR_TEMP_DIR_EXISTS"))
   )
+})
+
+test_that("envvar_get_dir() succeeds when var not set but default given", {
+  tempdir <- withr::local_tempdir(pattern = "envvar")
+  envvar_get_dir("ENVVAR_DIR_NOT_SET", default = tempdir) |>
+    expect_message()
 })
 
 test_that("envvar_get_dir() validates `create` arguments correctly", {
