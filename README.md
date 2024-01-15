@@ -67,6 +67,8 @@ envvar_get("NUM_CPUS", default = 12)
 #> [1] 12
 ```
 
+Warnings can be disabled with the `warn_default` argument.
+
 ## Speaking Native Types
 
 Let’s say our `NUM_CPUS` environment variable is set to 8. Because
