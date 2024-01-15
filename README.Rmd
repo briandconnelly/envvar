@@ -61,6 +61,8 @@ envvar prints a message, though, so you know that it's using a default rather th
 envvar_get("NUM_CPUS", default = 12)
 ```
 
+Warnings can be disabled with the `warn_default` argument.
+
 
 ## Speaking Native Types
 
