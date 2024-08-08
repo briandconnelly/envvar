@@ -1,5 +1,9 @@
 # envvar (development version)
 
+* Add informative classes when aborting (#13)
+* Fix error with example code (#13)
+
+
 # envvar 0.1.1
 
 * Added `warn_default` argument to getter functions to enable/disable warnings when defaults are used
