@@ -80,7 +80,10 @@ test_that("envvar_get_oneof() validates `choices` argument correctly", {
   # Choices should be a list of 1+ options
   withr::local_envvar(c("TESTENV_ENVVAR" = "HELLO"))
   expect_error(envvar_get_oneof("TESTENV_ENVVAR"))
-  expect_error(envvar_get_oneof("TESTENV_ENVVAR", choices = NULL))
+  expect_error(
+    envvar_get_oneof("TESTENV_ENVVAR", choices = NULL),
+    class = "envvar_no_choices"
+  )
   expect_error(envvar_get_oneof("TESTENV_ENVVAR", choices = NA_character_))
 })
 

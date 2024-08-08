@@ -15,7 +15,10 @@ envvar_get_integer <- function(x,
                                validate = NULL,
                                warn_default = TRUE) {
   if (!rlang::is_null(default) && !rlang::is_scalar_integerish(default)) {
-    cli::cli_abort("{.arg default} value {.val {default}} should be integer-like.") # nolint: line_length_linter
+    cli::cli_abort(
+      message = "{.arg default} value {.val {default}} should be integer-like.",
+      class = "envvar_invalid_default"
+    )
   }
 
   envvar_get(
@@ -23,7 +26,10 @@ envvar_get_integer <- function(x,
     default = default,
     transform = function(x) {
       if (!rlang::is_integerish(suppressWarnings(as.numeric(x)), finite = TRUE)) { # nolint: line_length_linter
-        cli::cli_abort("{.val {x}} is not an integer-like value")
+        cli::cli_abort(
+          message = "{.val {x}} is not an integer-like value",
+          class = "envvar_invalid_integer"
+        )
       } else {
         as.integer(x)
       }
@@ -48,7 +54,10 @@ envvar_get_numeric <- function(x,
                                validate = NULL,
                                warn_default = TRUE) {
   if (!rlang::is_null(default) && !rlang::is_scalar_double(default)) {
-    cli::cli_abort("{.arg default} value {.val {default}} should be numeric.") # nolint: line_length_linter
+    cli::cli_abort(
+      message = "{.arg default} value {.val {default}} should be numeric.",
+      class = "envvar_invalid_default"
+    )
   }
 
   envvar_get(
@@ -57,7 +66,10 @@ envvar_get_numeric <- function(x,
     transform = function(x) {
       val <- suppressWarnings(as.numeric(x))
       if (rlang::is_na(val)) {
-        cli::cli_abort("{.val {x}} is not a numeric value")
+        cli::cli_abort(
+          message = "{.val {x}} is not a numeric value",
+          class = "envvar_invalid_numeric"
+        )
         NA_real_
       } else {
         val
@@ -82,7 +94,10 @@ envvar_get_logical <- function(x,
                                validate = NULL,
                                warn_default = TRUE) {
   if (!rlang::is_null(default) && !rlang::is_scalar_logical(default)) {
-    cli::cli_abort("{.arg default} value {.val {default}} should be a logical value.") # nolint: line_length_linter
+    cli::cli_abort(
+      message = "{.arg default} value {.val {default}} should be a logical value.", # nolint: line_length_linter
+      class = "envvar_invalid_default"
+    )
   }
 
   envvar_get(
@@ -95,7 +110,10 @@ envvar_get_logical <- function(x,
       } else if (x %in% c("0", "1")) {
         as.logical(as.integer(x))
       } else {
-        cli::cli_abort("{.val {x}} is not a logical value")
+        cli::cli_abort(
+          message = "{.val {x}} is not a logical value",
+          class = "envvar_invalid_logical"
+        )
         NA
       }
     },
@@ -118,7 +136,10 @@ envvar_get_version <- function(x,
                                validate = NULL,
                                warn_default = TRUE) {
   if (!rlang::is_null(default) && !is.numeric_version(default) && rlang::is_na(numeric_version(default, strict = FALSE))) { # nolint: line_length_linter
-    cli::cli_abort("{.arg default} value {.val {default}} should be a numeric version.") # nolint: line_length_linter
+    cli::cli_abort(
+      message = "{.arg default} value {.val {default}} should be a numeric version.", # nolint: line_length_linter
+      class = "envvar_invalid_default"
+    )
   }
 
   envvar_get(
@@ -138,9 +159,9 @@ envvar_get_version <- function(x,
 #'   `envvar_get_date()` or [lubridate::as_datetime] for `envvar_get_datetime()`
 #' @export
 #' @examples
-#' # Get a date and make sure it's in the future
-#' envvar_set("LAUNCH_DATE" = "2024-08-08")
-#' envvar_get_date("LAUNCH_DATE", validate = \(x) x > Sys.Date())
+#' # Get a date and make sure it's in the past
+#' envvar_set("LAUNCH_DATE" = "2023-03-03")
+#' envvar_get_date("LAUNCH_DATE", validate = \(x) x < Sys.Date())
 envvar_get_date <- function(x,
                             default = NULL,
                             validate = NULL,

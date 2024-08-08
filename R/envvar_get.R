@@ -45,7 +45,10 @@ envvar_get <- function(x,
   if (rlang::is_na(value_raw)) {
     # Variable is not set. use default or error.
     if (rlang::is_null(default)) {
-      cli::cli_abort("Environment variable {.envvar {x}} is not set.")
+      cli::cli_abort(
+        message = "Environment variable {.envvar {x}} is not set.",
+        class = "envvar_notset"
+      )
     } else {
       if (warn_default) {
         cli::cli_alert_info("Environment variable {.envvar {x}} is not set. Using default value {.val {default}}.") # nolint: line_length_linter
@@ -63,7 +66,10 @@ envvar_get <- function(x,
   if (!rlang::is_null(validate)) {
     # use a try-catch instead??
     if (!validate(value)) {
-      cli::cli_abort("{.val {value_raw}} is not a valid value for {.envvar {x}}") # nolint: line_length_linter
+      cli::cli_abort(
+        message = "{.val {value_raw}} is not a valid value for {.envvar {x}}",
+        class = "envvar_invalid_value"
+      )
     }
   }
 
@@ -91,7 +97,10 @@ envvar_get_oneof <- function(x,
                              validate = NULL,
                              warn_default = TRUE) {
   if (length(choices) < 1) {
-    cli::cli_abort("{.arg choices} must include at least one valid choice")
+    cli::cli_abort(
+      message = "{.arg choices} must include at least one valid choice",
+      class = "envvar_no_choices"
+    )
   }
 
   envvar_get(
