@@ -1,4 +1,7 @@
-This release contains minor updates to existing functions
+Changes in this release:
+
+- Fixes code example that began producing errors
+- Minor updates to existing functions
 
 ## R CMD check results
 

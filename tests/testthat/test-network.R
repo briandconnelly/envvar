@@ -20,7 +20,10 @@ test_that("envvar_get_ipaddress() works as expected with invalid IPv4", {
   withr::local_envvar(list("TEST_IPV4" = test_ipv4))
 
   # Error is raised when an invalid IP address is given
-  expect_error(envvar_get_ipaddress("TEST_IPV4"))
+  expect_error(
+    envvar_get_ipaddress("TEST_IPV4"),
+    class = "envvar_invalid_ip_address"
+  )
   expect_snapshot(envvar_get_ipaddress("TEST_IPV4"), error = TRUE)
 })
 
@@ -32,7 +35,10 @@ test_that("envvar_get_ipaddress() works as expected with invalid IPv6", {
   withr::local_envvar(list("TEST_IPV6" = test_ipv6))
 
   # Warning is given when an invalid IP address is given
-  expect_error(envvar_get_ipaddress("TEST_IPV6"))
+  expect_error(
+    envvar_get_ipaddress("TEST_IPV6"),
+    class = "envvar_invalid_ip_address"
+  )
   expect_snapshot(envvar_get_ipaddress("TEST_IPV6"), error = TRUE)
 })
 

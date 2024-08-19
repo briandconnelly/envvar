@@ -22,7 +22,10 @@ envvar_get_uuid <- function(x,
     transform = function(x) {
       uuid <- uuid::as.UUID(x)
       if (rlang::is_na(uuid)) {
-        cli::cli_abort("{.val {x}} is not a valid UUID")
+        cli::cli_abort(
+          message = "{.val {x}} is not a valid UUID",
+          class = "envvar_invalid_uuid"
+        )
       }
       uuid
     },

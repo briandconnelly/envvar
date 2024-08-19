@@ -15,7 +15,10 @@ test_that("`envvar_get_integer()` works as expected", {
     envvar_get_integer("ENVVAR_TEST_INT_NOTSET", use_default = FALSE)
   )
   # `default` should be integer-like
-  expect_error(envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 23.31))
+  expect_error(
+    envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 23.31),
+    class = "envvar_invalid_default"
+  )
   expect_no_error(
     suppressMessages(
       envvar_get_integer("ENVVAR_TEST_INT_NOTSET", default = 90210)
@@ -73,7 +76,8 @@ test_that("`envvar_get_numeric()` works as expected", {
   expect_error(envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET"))
   expect_error(envvar_get_numeric("ENVVAR_TEST_NOTNUM"))
   expect_error(
-    envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = "not_a_number")
+    envvar_get_numeric("ENVVAR_TEST_NUM_NOTSET", default = "not_a_number"),
+    class = "envvar_invalid_default"
   )
   expect_no_error(
     suppressMessages(
@@ -122,7 +126,10 @@ test_that("`envvar_get_logical()` works as expected", {
   expect_true(envvar_get_logical("TEST_LOGICAL4"))
 
   expect_error(envvar_get_logical("TEST_NOTSET"))
-  expect_error(envvar_get_logical("TEST_LOGICAL1", default = 123.4))
+  expect_error(
+    envvar_get_logical("TEST_LOGICAL1", default = 123.4),
+    class = "envvar_invalid_default"
+  )
   expect_true(
     suppressMessages(envvar_get_logical("TEST_NOTSET", default = TRUE))
   )
@@ -171,7 +178,10 @@ test_that("`envvar_get_version()` works as expected", {
   expect_equal(envvar_get_version("TEST_VERSION"), numeric_version("1.2.3"))
 
   expect_error(envvar_get_version("TEST_NOTSET"))
-  expect_error(envvar_get_version("TEST_NOTSET", default = "not_a_version"))
+  expect_error(
+    envvar_get_version("TEST_NOTSET", default = "not_a_version"),
+    class = "envvar_invalid_default"
+  )
   expect_no_error(
     suppressMessages(envvar_get_version("TEST_NOTSET", default = "1.2.3"))
   )

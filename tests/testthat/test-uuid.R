@@ -4,7 +4,10 @@ test_that("envvar_get_uuid() works as expected with invalid UUIDs", {
   demo_uuid <- "d647f20f-c44c-4914-8255-9eca"
   withr::local_envvar("TEST_UUID" = demo_uuid)
 
-  expect_error(envvar_get_uuid("TEST_UUID"))
+  expect_error(
+    envvar_get_uuid("TEST_UUID"),
+    class = "envvar_invalid_uuid"
+  )
   expect_snapshot(envvar_get_uuid("TEST_UUID"), error = TRUE)
 })
 
