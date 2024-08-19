@@ -1,3 +1,5 @@
+# envvar (development version)
+
 # envvar 0.1.2
 
 * Add informative classes when aborting (#13)
